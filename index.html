@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>WORD · interactive legend</title>
+  <title>WORD CIRCLE · unlimited levels</title>
   <style>
     * {
       margin: 0;
@@ -12,599 +12,678 @@
     }
 
     body {
-      background: #f5f0e8;
-      font-family: 'Georgia', 'Times New Roman', 'Cormorant Garamond', serif;
+      background: #f5efe2;
+      font-family: 'Georgia', 'Times New Roman', serif;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       margin: 0;
       padding: 20px;
+      background: radial-gradient(circle at 30% 20%, #f3ede1, #e5d9c4);
     }
 
-    /* main card – resembling the classic look */
-    .game-container {
-      max-width: 500px;
+    .app-container {
+      max-width: 520px;
       width: 100%;
-      background: #faf7f2;
-      border-radius: 48px 48px 40px 40px;
-      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.08), 0 10px 20px rgba(0, 0, 0, 0.05);
-      padding: 2rem 1.5rem 2.2rem;
-      display: flex;
+      background: rgba(252, 248, 240, 0.9);
+      backdrop-filter: blur(20px);
+      border-radius: 70px;
+      box-shadow: 0 30px 55px rgba(0,0,0,0.1);
+      padding: 1.8rem 1.5rem 2rem;
+      border: 1px solid rgba(190, 160, 110, 0.35);
+      position: relative;
+    }
+
+    /* Pages */
+    .page {
+      display: none;
       flex-direction: column;
       align-items: center;
-      border: 1px solid rgba(180, 160, 130, 0.25);
-      position: relative;
-      backdrop-filter: blur(2px);
-    }
-
-    /* title area: WORD + decorative L E G E N D */
-    .title-section {
-      text-align: center;
-      margin-bottom: 1.5rem;
       width: 100%;
     }
 
-    .main-word {
-      font-size: 4.8rem;
-      font-weight: 500;
+    .page.active {
+      display: flex;
+    }
+
+    /* Menu page */
+    .menu-title {
+      font-size: 4rem;
       letter-spacing: 12px;
-      color: #2e2b26;
-      text-transform: uppercase;
-      line-height: 1;
-      font-family: 'Times New Roman', 'Georgia', serif;
-      text-shadow: 1px 1px 0 rgba(0,0,0,0.05);
-      margin-left: 8px; /* optical centering for letter-spacing */
-    }
-
-    .legend-row {
-      display: flex;
-      justify-content: center;
-      gap: 0.9rem;
-      margin-top: 0.2rem;
-      font-size: 1.7rem;
-      font-weight: 400;
-      letter-spacing: 5px;
-      color: #4a433a;
-      text-transform: uppercase;
-      font-family: 'Times New Roman', 'Georgia', serif;
-      opacity: 0.9;
-    }
-
-    .legend-letter {
-      display: inline-block;
-      transition: all 0.2s ease;
-    }
-
-    /* subtle divider */
-    .divider {
-      width: 70px;
-      height: 2px;
-      background: #d9cebc;
-      margin: 0.9rem auto 1.8rem;
-      border-radius: 2px;
-      opacity: 0.7;
-    }
-
-    /* Grid: 6 columns for letters L E G E N D */
-    .letters-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.9rem;
-      margin: 0.5rem 0 1.7rem;
-      width: 100%;
-    }
-
-    .letter-tile {
-      width: 62px;
-      height: 72px;
-      background: #ffffff;
-      border: 1.8px solid #cfc2ab;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      font-weight: 450;
-      color: #2e2a24;
-      text-transform: uppercase;
-      background: #fffdf9;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.04);
-      transition: all 0.18s ease;
-      font-family: 'Times New Roman', 'Georgia', serif;
-      position: relative;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .letter-tile.selected {
-      border-color: #b2976e;
-      background: #f9f3e8;
-      box-shadow: 0 0 0 3px rgba(190, 155, 100, 0.25);
-      transform: scale(1.02);
-    }
-
-    .letter-tile.placed-correct {
-      background: #e7decb;
-      border-color: #a5906c;
-      color: #2d281f;
+      color: #3f3527;
+      margin: 1rem 0 0.5rem;
       font-weight: 500;
-      box-shadow: 0 2px 8px rgba(140, 110, 70, 0.25);
+    }
+    .menu-sub {
+      font-size: 1.6rem;
+      letter-spacing: 8px;
+      color: #6b5c46;
+      margin-bottom: 2rem;
     }
 
-    /* input row for letters */
-    .word-input-area {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      margin: 0.8rem 0 1.4rem;
-      flex-wrap: wrap;
-    }
-
-    .letter-box {
-      width: 58px;
-      height: 66px;
-      background: #fefcf8;
-      border: 2px dashed #cfbba0;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.3rem;
-      font-weight: 450;
-      color: #5f5343;
-      text-transform: uppercase;
-      font-family: 'Times New Roman', 'Georgia', serif;
-      background: #fdfaf3;
-      transition: 0.15s;
-    }
-
-    .letter-box.filled {
-      border: 2px solid #b7a17c;
+    .level-info {
       background: #f8f2e7;
-      color: #2e281f;
-      font-weight: 500;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      padding: 0.8rem 2.5rem;
+      border-radius: 3rem;
+      font-size: 1.6rem;
+      margin: 1rem 0;
+      border: 1px solid #cfbc9a;
+      color: #4d3f2b;
     }
 
-    .action-buttons {
+    .circle-preview {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: #fefcf7;
+      margin: 1rem 0;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.06);
       display: flex;
-      gap: 1.2rem;
-      margin-top: 0.6rem;
-      margin-bottom: 0.4rem;
-      flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
+      font-size: 2rem;
+      color: #b3925c;
+      border: 2px dashed #cfbc9a;
     }
 
     .btn {
-      background: #f3efe7;
-      border: 1.5px solid #cfbea2;
-      padding: 0.7rem 1.7rem;
-      border-radius: 50px;
+      background: #f5efe4;
+      border: 1.5px solid #cfbc9a;
+      padding: 0.7rem 2rem;
+      border-radius: 3rem;
       font-size: 1.2rem;
       font-weight: 450;
-      color: #3e382e;
-      background: #faf7f0;
+      color: #3d3529;
+      background: #f9f4ea;
       cursor: pointer;
-      backdrop-filter: blur(4px);
       transition: all 0.2s;
-      font-family: 'Georgia', 'Times New Roman', serif;
-      letter-spacing: 0.4px;
-      display: flex;
+      font-family: 'Georgia', serif;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      margin: 0.4rem;
+      display: inline-flex;
       align-items: center;
       gap: 0.3rem;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.03);
     }
 
     .btn:hover {
-      background: #f2e9db;
-      border-color: #b1966f;
-      color: #2b241a;
+      background: #efe2ce;
+      border-color: #b99b6c;
     }
-
     .btn:active {
       transform: scale(0.96);
+    }
+
+    .music-toggle {
       background: #e7dac5;
+      border-color: #b3925c;
     }
 
-    .message-area {
-      min-height: 2.5rem;
-      margin: 1rem 0 0.2rem;
-      font-size: 1.15rem;
-      color: #5f4e38;
-      font-style: italic;
-      text-align: center;
-      font-weight: 430;
-      letter-spacing: 0.3px;
-      background: rgba(245, 240, 232, 0.7);
-      padding: 0.3rem 1.2rem;
-      border-radius: 30px;
+    /* Game page */
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      margin-bottom: 0.5rem;
     }
-
-    .download-btn {
-      background: #dbceb6;
-      border-color: #ab946f;
-      color: #2d281f;
+    .level-badge {
+      background: #e7d9c2;
+      padding: 0.4rem 1.2rem;
+      border-radius: 2rem;
+      font-size: 1rem;
       font-weight: 500;
-      margin-top: 0.5rem;
     }
 
-    .download-btn:hover {
-      background: #cfbc9a;
+    .word-title {
+      font-size: 3.2rem;
+      letter-spacing: 10px;
+      color: #3f3527;
+      font-weight: 500;
+    }
+    .legend-sub {
+      font-size: 1.5rem;
+      letter-spacing: 7px;
+      color: #6b5c46;
+      margin-bottom: 0.8rem;
     }
 
-    @media (max-width: 450px) {
-      .letter-tile {
-        width: 52px;
-        height: 62px;
-        font-size: 2.1rem;
-      }
-      .letter-box {
-        width: 48px;
-        height: 58px;
-        font-size: 2rem;
-      }
+    .circle-container {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 0.8rem 0;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      max-width: 380px;
+      height: auto;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      background: #fefcf7;
+      box-shadow: 0 15px 30px rgba(100,70,30,0.1), inset 0 0 20px rgba(210,180,120,0.25);
+      touch-action: none;
+      cursor: pointer;
+    }
+
+    .word-display {
+      margin: 0.8rem 0;
+      font-size: 2.2rem;
+      letter-spacing: 4px;
+      min-height: 3.2rem;
+      background: #faf5ec;
+      padding: 0.2rem 2rem;
+      border-radius: 3rem;
+      color: #4b3c28;
+      border: 1px dashed #cbb594;
+      text-transform: uppercase;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0.5rem 0;
+    }
+
+    .message {
+      font-style: italic;
+      color: #6f5e47;
+      margin: 0.4rem 0;
+      min-height: 1.6rem;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
-<div class="game-container">
-  <!-- WORD title -->
-  <div class="title-section">
-    <div class="main-word">WORD</div>
-    <!-- L E G E N D underneath -->
-    <div class="legend-row" id="legendDisplay">
-      <span class="legend-letter">L</span>
-      <span class="legend-letter">E</span>
-      <span class="legend-letter">G</span>
-      <span class="legend-letter">E</span>
-      <span class="legend-letter">N</span>
-      <span class="legend-letter">D</span>
+<div class="app-container" id="appContainer">
+  <!-- PAGE 1: MENU / LEVEL SELECT -->
+  <div class="page active" id="menuPage">
+    <div class="menu-title">WORD</div>
+    <div class="menu-sub">L E G E N D</div>
+    <div class="circle-preview">🌀</div>
+    <div class="level-info" id="levelDisplayMenu">Level 1</div>
+    <button class="btn" id="playBtn">▶ Play</button>
+    <button class="btn" id="nextLevelBtnMenu">⏭ Next Level</button>
+    <button class="btn music-toggle" id="musicToggleMenu">🎵 Music On</button>
+    <p style="margin-top:1rem; color:#5f4e38;">unlimited levels · finger connect</p>
+  </div>
+
+  <!-- PAGE 2: GAME PAGE -->
+  <div class="page" id="gamePage">
+    <div class="game-header">
+      <span class="level-badge" id="levelBadge">Level 1</span>
+      <button class="btn" id="backToMenuBtn" style="padding:0.4rem 1.2rem;">☰ Menu</button>
     </div>
+    <div class="word-title">WORD</div>
+    <div class="legend-sub">L E G E N D</div>
+
+    <div class="circle-container">
+      <canvas id="letterCanvas" width="400" height="400" aria-label="Circle of letters"></canvas>
+    </div>
+
+    <div class="word-display" id="formedWordDisplay">·······</div>
+
+    <div class="button-row">
+      <button class="btn" id="shuffleBtn"><span>⟳</span> Shuffle</button>
+      <button class="btn" id="clearBtn"><span>↺</span> Clear</button>
+    </div>
+    <button class="btn music-toggle" id="musicToggleGame">🎵 Music On</button>
+    <button class="btn" id="nextLevelBtnGame">⏭ Next Level</button>
+    <div class="message" id="messageBox">drag finger across letters</div>
+    <button class="btn" id="downloadBtn" style="margin-top:0.5rem;">⬇️ Download App</button>
   </div>
-
-  <div class="divider"></div>
-
-  <!-- interactive letter tiles (the LEGEND letters to choose from) -->
-  <div class="letters-grid" id="tileContainer">
-    <!-- dynamically filled with L,E,G,E,N,D -->
-  </div>
-
-  <!-- Word construction row: 6 slots for LEGEND -->
-  <div class="word-input-area" id="wordSlots">
-    <!-- 6 boxes for letters -->
-  </div>
-
-  <div class="action-buttons">
-    <button class="btn" id="clearBtn"><span>↺</span> Clear</button>
-    <button class="btn" id="shuffleBtn"><span>⟳</span> Shuffle</button>
-  </div>
-
-  <div class="message-area" id="messageBox">tap letters to form LEGEND</div>
-
-  <!-- Download button – saves the app as an HTML file -->
-  <button class="btn download-btn" id="downloadAppBtn">
-    <span>⬇️</span> Download App
-  </button>
 </div>
 
 <script>
   (function() {
-    // ----- GAME STATE -----
-    const TARGET_WORD = "LEGEND"; 
-    const TARGET_LETTERS = ['L', 'E', 'G', 'E', 'N', 'D'];
+    // ----- AUDIO ENGINE (Web Audio API) -----
+    let audioCtx = null;
+    let musicGain = null;
+    let musicOscillators = [];
+    let musicPlaying = true;
+    let currentMusicNoteIndex = 0;
+    let musicInterval = null;
     
-    // Current arrangement of tiles (order can be shuffled)
-    let currentTiles = [...TARGET_LETTERS];
+    // Simple melody notes (frequencies in Hz) – gentle ambient
+    const melodyNotes = [262, 294, 330, 349, 392, 349, 330, 294]; // C D E F G F E D
+    const noteDuration = 400; // ms per note
     
-    // Slots: array of 6, each either empty string or a letter
-    let slots = ['', '', '', '', '', ''];
-    
-    // Currently selected tile index (in tileContainer), -1 if none
-    let selectedTileIndex = -1;
-    
-    // DOM elements
-    const tileContainer = document.getElementById('tileContainer');
-    const wordSlotsContainer = document.getElementById('wordSlots');
-    const messageBox = document.getElementById('messageBox');
-    const clearBtn = document.getElementById('clearBtn');
-    const shuffleBtn = document.getElementById('shuffleBtn');
-    const downloadBtn = document.getElementById('downloadAppBtn');
-    const legendDisplayLetters = document.querySelectorAll('.legend-letter');
-    
-    // ----- HELPER: update UI completely -----
-    function renderAll() {
-      renderTiles();
-      renderSlots();
-      updateLegendHighlight();
-      checkWinCondition();
-    }
-    
-    // Render the draggable letter tiles
-    function renderTiles() {
-      tileContainer.innerHTML = '';
-      currentTiles.forEach((letter, idx) => {
-        const tileDiv = document.createElement('div');
-        tileDiv.className = 'letter-tile';
-        // add selected class if this tile is currently selected
-        if (idx === selectedTileIndex) {
-          tileDiv.classList.add('selected');
-        }
-        // check if this tile is already placed in any slot (visual clue)
-        // We'll indicate if the tile is used (placed) by checking if it's already assigned to a slot?
-        // But multiple same letters: better approach: mark tiles that are "used" 
-        // We'll track placed tile indices in a set.
-        const placedTileIndices = getPlacedTileIndices();
-        if (placedTileIndices.has(idx)) {
-          tileDiv.classList.add('placed-correct');
-        }
-        
-        tileDiv.textContent = letter;
-        tileDiv.dataset.index = idx;
-        tileDiv.dataset.letter = letter;
-        
-        tileDiv.addEventListener('click', (e) => handleTileClick(idx));
-        tileContainer.appendChild(tileDiv);
-      });
-    }
-    
-    // Returns a Set of tile indices that are currently placed in slots
-    function getPlacedTileIndices() {
-      const placed = new Set();
-      // We need mapping: each slot holds a letter, but we must know which tile index it came from.
-      // We'll use a parallel array slotTileIndex[slotPos] = tileIndex or -1
-      // We'll maintain that state.
-      if (!window.slotTileMap) {
-        window.slotTileMap = [-1, -1, -1, -1, -1, -1];
-      }
-      window.slotTileMap.forEach(tileIdx => {
-        if (tileIdx !== -1) placed.add(tileIdx);
-      });
-      return placed;
-    }
-    
-    // Initialize slot-tile mapping if not exists
-    if (!window.slotTileMap) {
-      window.slotTileMap = [-1, -1, -1, -1, -1, -1];
-    }
-    
-    // Update slotTileMap based on current slots and tile letters (complex but we manage carefully)
-    function syncSlotTileMapAfterChange() {
-      // This rebuilds slotTileMap by searching for each slot's letter in currentTiles,
-      // avoiding duplicate tile indices. More robust: maintain assignment when placing/clearing.
-      // We'll keep it consistent by updating on place/clear actions.
-    }
-    
-    // Render the 6 word slots
-    function renderSlots() {
-      wordSlotsContainer.innerHTML = '';
-      for (let i = 0; i < 6; i++) {
-        const slotBox = document.createElement('div');
-        slotBox.className = 'letter-box';
-        if (slots[i] !== '') {
-          slotBox.classList.add('filled');
-          slotBox.textContent = slots[i];
-        } else {
-          slotBox.textContent = '';
-        }
-        // Allow clicking on a filled slot to remove that letter (return to tiles)
-        slotBox.addEventListener('click', (e) => handleSlotClick(i));
-        wordSlotsContainer.appendChild(slotBox);
+    function initAudio() {
+      if (audioCtx) return;
+      try {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        musicGain = audioCtx.createGain();
+        musicGain.gain.value = 0.12;
+        musicGain.connect(audioCtx.destination);
+      } catch (e) {
+        console.log("Audio not supported");
+        musicPlaying = false;
       }
     }
     
-    // Handle tile click: select or place
-    function handleTileClick(tileIndex) {
-      const letter = currentTiles[tileIndex];
-      
-      // If this tile is already placed in a slot, we might want to remove it? 
-      // Better: if tile is already placed, clicking it could remove from slot (unplace).
-      const placedIndices = getPlacedTileIndices();
-      if (placedIndices.has(tileIndex)) {
-        // Tile is already used: find which slot it occupies and clear that slot
-        const slotPos = window.slotTileMap.indexOf(tileIndex);
-        if (slotPos !== -1) {
-          // Clear that slot
-          slots[slotPos] = '';
-          window.slotTileMap[slotPos] = -1;
-          // Deselect any selection
-          clearSelection();
-          renderAll();
+    function playTone(freq, duration, type = 'sine', vol = 0.15) {
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, now);
+      gain.gain.setValueAtTime(vol, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + duration);
+    }
+    
+    function playSelectSound() {
+      playTone(520, 0.1, 'sine', 0.1);
+    }
+    
+    function playSuccessSound() {
+      if (!audioCtx) return;
+      playTone(660, 0.15, 'triangle', 0.2);
+      setTimeout(() => playTone(880, 0.2, 'triangle', 0.2), 150);
+    }
+    
+    function startMusic() {
+      if (!audioCtx || !musicPlaying) return;
+      stopMusic();
+      currentMusicNoteIndex = 0;
+      function playNextNote() {
+        if (!musicPlaying || !audioCtx) {
+          stopMusic();
+          return;
+        }
+        const note = melodyNotes[currentMusicNoteIndex % melodyNotes.length];
+        playTone(note, 0.3, 'sine', 0.08);
+        currentMusicNoteIndex++;
+      }
+      playNextNote();
+      musicInterval = setInterval(playNextNote, noteDuration);
+    }
+    
+    function stopMusic() {
+      if (musicInterval) {
+        clearInterval(musicInterval);
+        musicInterval = null;
+      }
+    }
+    
+    function toggleMusic() {
+      if (!audioCtx) {
+        initAudio();
+        if (audioCtx) {
+          musicPlaying = true;
+          startMusic();
+          updateMusicButtons();
           return;
         }
       }
-      
-      // If no tile selected, select this tile (if not placed)
-      if (selectedTileIndex === -1) {
-        // Select this tile
-        selectedTileIndex = tileIndex;
-        renderAll();
-        return;
+      musicPlaying = !musicPlaying;
+      if (musicPlaying) {
+        startMusic();
+      } else {
+        stopMusic();
       }
-      
-      // A tile is already selected
-      if (selectedTileIndex === tileIndex) {
-        // Deselect
-        clearSelection();
-        renderAll();
-        return;
-      }
-      
-      // Different tile selected: we could swap selection or place the previously selected?
-      // Better UX: If another tile selected, we deselect previous and select new one.
-      // But also allow placing the selected tile into empty slot by clicking slot? We'll keep selection.
-      // So just change selection to new tile.
-      selectedTileIndex = tileIndex;
-      renderAll();
-      return;
+      updateMusicButtons();
     }
     
-    // Handle clicking on a slot box
-    function handleSlotClick(slotIndex) {
-      // If slot has a letter, remove it (return tile to pool)
-      if (slots[slotIndex] !== '') {
-        // Find tile index that occupies this slot
-        const tileIdx = window.slotTileMap[slotIndex];
-        // Clear slot
-        slots[slotIndex] = '';
-        if (tileIdx !== -1) {
-          window.slotTileMap[slotIndex] = -1;
-        }
-        // Also clear selection if any
-        clearSelection();
-        renderAll();
-        return;
+    function updateMusicButtons() {
+      const status = musicPlaying ? '🎵 Music On' : '🔇 Music Off';
+      document.getElementById('musicToggleMenu').textContent = status;
+      document.getElementById('musicToggleGame').textContent = status;
+    }
+    
+    // ----- GAME LOGIC -----
+    const TARGET_WORD = "LEGEND";
+    const BASE_LETTERS = ['L', 'E', 'G', 'E', 'N', 'D'];
+    
+    let currentLevel = 1;
+    let circleLetters = [...BASE_LETTERS];
+    let letterPositions = [];
+    let selectedIndices = [];
+    let currentWord = '';
+    let isDrawing = false;
+    let canvasRect = null;
+    
+    const canvas = document.getElementById('letterCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // UI elements
+    const formedWordDisplay = document.getElementById('formedWordDisplay');
+    const messageBox = document.getElementById('messageBox');
+    const levelBadge = document.getElementById('levelBadge');
+    const levelDisplayMenu = document.getElementById('levelDisplayMenu');
+    
+    // Pages
+    const menuPage = document.getElementById('menuPage');
+    const gamePage = document.getElementById('gamePage');
+    
+    function updateLevelDisplay() {
+      levelBadge.textContent = `Level ${currentLevel}`;
+      levelDisplayMenu.textContent = `Level ${currentLevel}`;
+    }
+    
+    // Generate harder letters for higher levels (unlimited progression)
+    function generateLevelLetters(level) {
+      // Start with base letters, then add variations/shuffles that make it harder
+      let letters = [...BASE_LETTERS];
+      
+      // For levels > 1, we introduce controlled difficulty:
+      // - shuffle more aggressively
+      // - sometimes duplicate letters to confuse (but keep target solvable)
+      if (level >= 3) {
+        // Add extra decoy letters? No, we keep exactly 6 letters for LEGEND.
+        // Instead, we ensure the arrangement is tricky.
+        // Use Fisher-Yates with seed based on level for consistency?
+        // We'll just shuffle randomly; unlimited levels just reshuffle.
       }
       
-      // Slot is empty: try to place the currently selected tile here
-      if (selectedTileIndex === -1) {
-        messageBox.textContent = 'Select a letter tile first';
-        return;
+      // Shuffle letters based on level seed for variation
+      const shuffled = [...letters];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
       }
-      
-      // Check if selected tile is already placed (shouldn't happen if we prevent, but just in case)
-      if (getPlacedTileIndices().has(selectedTileIndex)) {
-        messageBox.textContent = 'That tile is already used';
-        clearSelection();
-        renderAll();
-        return;
-      }
-      
-      // Place the selected tile into this empty slot
-      const letterToPlace = currentTiles[selectedTileIndex];
-      slots[slotIndex] = letterToPlace;
-      window.slotTileMap[slotIndex] = selectedTileIndex;
-      
-      // Clear selection after placement
+      return shuffled;
+    }
+    
+    function loadLevel(level) {
+      currentLevel = level;
+      circleLetters = generateLevelLetters(level);
       clearSelection();
-      renderAll();
+      computeLetterPositions();
+      drawCircle();
+      updateLevelDisplay();
+      messageBox.textContent = 'drag finger across letters';
+    }
+    
+    function nextLevel() {
+      currentLevel++;
+      loadLevel(currentLevel);
+      if (musicPlaying) playSelectSound();
+    }
+    
+    function computeLetterPositions() {
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = Math.min(canvas.width, canvas.height) * 0.38;
+      const count = circleLetters.length;
+      letterPositions = [];
+      const startAngle = -Math.PI / 2;
+      for (let i = 0; i < count; i++) {
+        const angle = startAngle + (i * 2 * Math.PI / count);
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+        letterPositions.push({ x, y, letter: circleLetters[i], index: i });
+      }
+    }
+    
+    function drawCircle() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (letterPositions.length === 0) computeLetterPositions();
+      
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      
+      // faint ring
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, Math.min(canvas.width, canvas.height) * 0.42, 0, 2*Math.PI);
+      ctx.strokeStyle = '#dacdb8';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([8, 8]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      
+      // connection lines
+      if (selectedIndices.length > 1) {
+        ctx.beginPath();
+        ctx.strokeStyle = '#b3925c';
+        ctx.lineWidth = 3.8;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.shadowColor = '#c9ad7a';
+        ctx.shadowBlur = 8;
+        const firstPos = letterPositions[selectedIndices[0]];
+        ctx.moveTo(firstPos.x, firstPos.y);
+        for (let i = 1; i < selectedIndices.length; i++) {
+          const pos = letterPositions[selectedIndices[i]];
+          ctx.lineTo(pos.x, pos.y);
+        }
+        ctx.stroke();
+        ctx.shadowColor = 'transparent';
+        ctx.shadowBlur = 0;
+      }
+      
+      // letter nodes
+      letterPositions.forEach((pos, idx) => {
+        const isSelected = selectedIndices.includes(idx);
+        if (isSelected) {
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, 28, 0, 2*Math.PI);
+          ctx.fillStyle = '#f3e7d3';
+          ctx.shadowBlur = 14;
+          ctx.shadowColor = '#c9af7c';
+          ctx.fill();
+          ctx.shadowColor = 'transparent';
+          ctx.shadowBlur = 0;
+        }
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, 25, 0, 2*Math.PI);
+        ctx.fillStyle = isSelected ? '#f7efdf' : '#fffef9';
+        ctx.fill();
+        ctx.strokeStyle = isSelected ? '#b3925c' : '#cfc0a6';
+        ctx.lineWidth = 2.2;
+        ctx.stroke();
+        ctx.font = 'bold 22px "Times New Roman", "Georgia", serif';
+        ctx.fillStyle = '#3e3629';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(pos.letter, pos.x, pos.y);
+      });
+      
+      if (currentWord.length > 0) {
+        ctx.font = 'italic 18px "Georgia", serif';
+        ctx.fillStyle = '#5c4b31';
+        ctx.fillText(currentWord, centerX, centerY + 4);
+      }
+    }
+    
+    function updateWordFromSelection() {
+      currentWord = selectedIndices.map(i => circleLetters[i]).join('');
+      formedWordDisplay.textContent = currentWord || '·······';
+      
+      if (currentWord === TARGET_WORD) {
+        messageBox.textContent = '🌟 LEGEND! Level complete! 🌟';
+        formedWordDisplay.style.color = '#b3925c';
+        if (musicPlaying) playSuccessSound();
+      } else if (currentWord.length === TARGET_WORD.length && currentWord !== TARGET_WORD) {
+        messageBox.textContent = 'Not LEGEND. Try different path.';
+        formedWordDisplay.style.color = '#4b3c28';
+      } else if (currentWord.length > 0) {
+        messageBox.textContent = 'keep dragging...';
+        formedWordDisplay.style.color = '#4b3c28';
+      } else {
+        messageBox.textContent = 'drag finger across letters';
+        formedWordDisplay.style.color = '#4b3c28';
+      }
     }
     
     function clearSelection() {
-      selectedTileIndex = -1;
+      selectedIndices = [];
+      currentWord = '';
+      updateWordFromSelection();
+      drawCircle();
     }
     
-    // Clear all slots
-    function clearAllSlots() {
-      slots = ['', '', '', '', '', ''];
-      window.slotTileMap = [-1, -1, -1, -1, -1, -1];
-      clearSelection();
-      renderAll();
-      messageBox.textContent = 'Cleared. Build LEGEND';
-    }
-    
-    // Shuffle the tiles (only unplaced tiles? Better shuffle all tiles but maintain placed assignments?)
-    // To keep it intuitive: Shuffle rearranges tile order, but placed letters remain in slots.
-    // However, placed tiles correspond to tile indices; shuffling changes indices -> breaks mapping.
-    // Simplest: Shuffle only allowed when no tiles are placed? Or reset placement on shuffle.
-    // Good UX: Shuffle clears all slots and shuffles all tiles fresh.
-    function shuffleTiles() {
-      // Clear all slots first
-      slots = ['', '', '', '', '', ''];
-      window.slotTileMap = [-1, -1, -1, -1, -1, -1];
-      clearSelection();
-      
-      // Fisher–Yates shuffle on currentTiles
-      for (let i = currentTiles.length - 1; i > 0; i--) {
+    function shuffleLetters() {
+      for (let i = circleLetters.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [currentTiles[i], currentTiles[j]] = [currentTiles[j], currentTiles[i]];
+        [circleLetters[i], circleLetters[j]] = [circleLetters[j], circleLetters[i]];
       }
-      renderAll();
-      messageBox.textContent = 'Tiles shuffled. Form LEGEND';
+      clearSelection();
+      computeLetterPositions();
+      drawCircle();
+      messageBox.textContent = 'letters shuffled';
+      if (musicPlaying) playSelectSound();
     }
     
-    // Check win condition
-    function checkWinCondition() {
-      const formedWord = slots.join('');
-      if (formedWord === TARGET_WORD) {
-        messageBox.textContent = '✨ Perfect! You formed LEGEND ✨';
-        // Additional celebration: briefly change legend color
-        legendDisplayLetters.forEach(span => {
-          span.style.color = '#b3925c';
-          span.style.fontWeight = '500';
-        });
-        setTimeout(() => {
-          legendDisplayLetters.forEach(span => {
-            span.style.color = '#4a433a';
-            span.style.fontWeight = '400';
-          });
-        }, 1000);
-      } else if (formedWord.length === 6 && formedWord !== TARGET_WORD) {
-        messageBox.textContent = 'Not quite LEGEND. Keep trying.';
-      } else if (slots.some(s => s !== '')) {
-        messageBox.textContent = 'Building...';
+    function getLetterIndexFromPoint(clientX, clientY) {
+      if (!canvasRect) canvasRect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / canvasRect.width;
+      const scaleY = canvas.height / canvasRect.height;
+      const canvasX = (clientX - canvasRect.left) * scaleX;
+      const canvasY = (clientY - canvasRect.top) * scaleY;
+      for (let i = 0; i < letterPositions.length; i++) {
+        const dist = Math.hypot(canvasX - letterPositions[i].x, canvasY - letterPositions[i].y);
+        if (dist <= 30) return i;
+      }
+      return -1;
+    }
+    
+    function onPointerDown(e) {
+      e.preventDefault();
+      initAudio();
+      canvasRect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const hitIndex = getLetterIndexFromPoint(clientX, clientY);
+      selectedIndices = [];
+      if (hitIndex !== -1) {
+        selectedIndices.push(hitIndex);
+        isDrawing = true;
+        if (musicPlaying) playSelectSound();
       } else {
-        messageBox.textContent = 'tap letters to form LEGEND';
+        isDrawing = false;
       }
+      updateWordFromSelection();
+      drawCircle();
     }
     
-    function updateLegendHighlight() {
-      // Reset all legend letters style
-      legendDisplayLetters.forEach(span => {
-        span.style.color = '#4a433a';
-        span.style.fontWeight = '400';
-      });
-      // Highlight letters that are correctly placed in matching positions?
-      // optional: show which position is correct
-      for (let i = 0; i < 6; i++) {
-        if (slots[i] === TARGET_LETTERS[i]) {
-          if (legendDisplayLetters[i]) {
-            legendDisplayLetters[i].style.color = '#b3925c';
-            legendDisplayLetters[i].style.fontWeight = '500';
+    function onPointerMove(e) {
+      e.preventDefault();
+      if (!isDrawing) return;
+      canvasRect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const hitIndex = getLetterIndexFromPoint(clientX, clientY);
+      if (hitIndex !== -1) {
+        const lastIndex = selectedIndices.length > 0 ? selectedIndices[selectedIndices.length-1] : -1;
+        if (hitIndex !== lastIndex) {
+          const alreadyIn = selectedIndices.includes(hitIndex);
+          if (alreadyIn) {
+            if (selectedIndices.length >= 2 && selectedIndices[selectedIndices.length-2] === hitIndex) {
+              selectedIndices.pop();
+            }
+          } else {
+            selectedIndices.push(hitIndex);
+            if (musicPlaying) playSelectSound();
           }
         }
       }
+      updateWordFromSelection();
+      drawCircle();
     }
     
-    // Reset/initialize game
-    function resetGame() {
-      currentTiles = [...TARGET_LETTERS];
-      slots = ['', '', '', '', '', ''];
-      window.slotTileMap = [-1, -1, -1, -1, -1, -1];
-      clearSelection();
-      renderAll();
-      messageBox.textContent = 'tap letters to form LEGEND';
+    function onPointerUp(e) {
+      e.preventDefault();
+      isDrawing = false;
+      drawCircle();
+      if (currentWord === TARGET_WORD) {
+        messageBox.textContent = '🎉 LEGEND! Tap Next Level!';
+      }
     }
     
-    // Event Listeners
-    clearBtn.addEventListener('click', clearAllSlots);
-    shuffleBtn.addEventListener('click', shuffleTiles);
-    
-    // Download function: create HTML file and trigger download
-    function downloadApp() {
-      // Get the whole HTML content of the page
-      const doctype = '<!DOCTYPE html>\n';
-      const html = document.documentElement.outerHTML;
-      
-      // Create a Blob
-      const blob = new Blob([doctype + html], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
-      
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'WORD_LEGEND_game.html';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      
-      messageBox.textContent = '📥 App downloaded! Open the file.';
-      setTimeout(() => {
-        if (messageBox.textContent.includes('downloaded')) {
-          messageBox.textContent = 'tap letters to form LEGEND';
-        }
-      }, 2500);
+    function bindEvents() {
+      canvas.addEventListener('touchstart', onPointerDown, { passive: false });
+      canvas.addEventListener('touchmove', onPointerMove, { passive: false });
+      canvas.addEventListener('touchend', onPointerUp);
+      canvas.addEventListener('touchcancel', onPointerUp);
+      canvas.addEventListener('mousedown', onPointerDown);
+      window.addEventListener('mousemove', (e) => {
+        if (isDrawing && e.buttons === 1) onPointerMove(e);
+      });
+      window.addEventListener('mouseup', () => {
+        if (isDrawing) { isDrawing = false; drawCircle(); }
+      });
     }
     
-    downloadBtn.addEventListener('click', downloadApp);
+    // Page navigation
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      if (pageId === 'gamePage') {
+        canvasRect = canvas.getBoundingClientRect();
+        drawCircle();
+      }
+    }
     
-    // Initial render
-    resetGame();
+    // Initialize everything
+    function init() {
+      initAudio();
+      if (musicPlaying) startMusic();
+      updateMusicButtons();
+      computeLetterPositions();
+      drawCircle();
+      bindEvents();
+      updateLevelDisplay();
+      
+      // Menu buttons
+      document.getElementById('playBtn').addEventListener('click', () => {
+        showPage('gamePage');
+        loadLevel(currentLevel);
+      });
+      document.getElementById('nextLevelBtnMenu').addEventListener('click', () => {
+        nextLevel();
+      });
+      document.getElementById('musicToggleMenu').addEventListener('click', toggleMusic);
+      
+      // Game buttons
+      document.getElementById('backToMenuBtn').addEventListener('click', () => {
+        showPage('menuPage');
+      });
+      document.getElementById('shuffleBtn').addEventListener('click', shuffleLetters);
+      document.getElementById('clearBtn').addEventListener('click', () => {
+        clearSelection();
+        messageBox.textContent = 'selection cleared';
+      });
+      document.getElementById('musicToggleGame').addEventListener('click', toggleMusic);
+      document.getElementById('nextLevelBtnGame').addEventListener('click', () => {
+        nextLevel();
+        messageBox.textContent = `Level ${currentLevel} · drag finger`;
+      });
+      document.getElementById('downloadBtn').addEventListener('click', () => {
+        const doctype = '<!DOCTYPE html>\n';
+        const html = document.documentElement.outerHTML;
+        const blob = new Blob([doctype + html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'WORD_circle_unlimited.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        messageBox.textContent = '📥 App downloaded!';
+      });
+      
+      window.addEventListener('resize', () => {
+        canvasRect = canvas.getBoundingClientRect();
+        drawCircle();
+      });
+    }
     
-    // Additional: ensure legend letters are clickable? Not needed, but nice.
-    // Also make legend display interactive? We'll keep decorative.
+    init();
   })();
 </script>
 </body>
