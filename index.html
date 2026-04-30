@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhotoShot Pro - Photography & Videography Business Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --gold: #d4a574;
+            --light: #f5f5f5;
+            --dark: #0f3460;
+            --text: #333;
+            --white: #ffffff;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid transparent;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            border-color: var(--accent);
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 30px;
+        }
+
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .stat-card .number {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .stat-card .icon {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 40px;
+            opacity: 0.3;
+        }
+
+        /* Forms */
+        .form-section {
+            background: var(--light);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn {
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        /* Booking Cards */
+        .bookings-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .booking-card {
+            background: var(--white);
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .booking-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        .booking-info h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .booking-detail {
+            display: flex;
+            gap: 10px;
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .booking-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .booking-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        /* Portfolio Gallery */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 20px;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        /* Hidden sections */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            font-size: 28px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #999;
+        }
+
+        .package-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .package-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .package-card.selected {
+            border-color: var(--accent);
+            background: #fff5f5;
+        }
+
+        .package-price {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .client-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .client-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .export-btn {
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .booking-card {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Photo<span>Shot</span> Pro</div>
+            <div class="nav-menu">
+                <button class="nav-btn active" onclick="showSection('dashboard')">📊 Dashboard</button>
+                <button class="nav-btn" onclick="showSection('bookings')">📅 Bookings</button>
+                <button class="nav-btn" onclick="showSection('new-booking')">➕ New Booking</button>
+                <button class="nav-btn" onclick="showSection('portfolio')">🖼️ Portfolio</button>
+                <button class="nav-btn" onclick="showSection('clients')">👥 Clients</button>
+                <button class="nav-btn" onclick="showSection('packages')">💎 Packages</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="section active">
+                <h2 style="margin-bottom: 20px; color: var(--primary);">Dashboard Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="icon">📅</div>
+                        <h3>Total Bookings</h3>
+                        <div class="number" id="totalBookings">0</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="icon">💰</div>
+                        <h3>Revenue</h3>
+                        <div class="number" id="totalRevenue">$0</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="icon">👥</div>
+                        <h3>Clients</h3>
+                        <div class="number" id="totalClients">0</div>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <div class="icon">⭐</div>
+                        <h3>Completed</h3>
+                        <div class="number" id="completedJobs">0</div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="form-title">Upcoming Bookings</h3>
+                    <div id="upcomingBookings" class="bookings-list"></div>
+                </div>
+            </div>
+
+            <!-- Bookings Section -->
+            <div id="bookings" class="section">
+                <h2 style="margin-bottom: 20px; color: var(--primary);">All Bookings</h2>
+                <div style="margin-bottom: 20px;">
+                    <select id="bookingFilter" onchange="filterBookings()" style="padding: 10px; border-radius: 8px; border: 2px solid #ddd;">
+                        <option value="all">All Bookings</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                    <button class="btn btn-secondary" onclick="exportBookings()" style="margin-left: 10px;">📥 Export CSV</button>
+                </div>
+                <div id="allBookings" class="bookings-list"></div>
+            </div>
+
+            <!-- New Booking Section -->
+            <div id="new-booking" class="section">
+                <h2 style="margin-bottom: 20px; color: var(--primary);">Create New Booking</h2>
+                <div class="form-section">
+                    <h3 class="form-title">Client & Event Details</h3>
+                    <form id="bookingForm" onsubmit="createBooking(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Client Name *</label>
+                                <input type="text" id="clientName" required placeholder="Enter client name">
+                            </div>
+                            <div class="form-group">
+                                <label>Email *</label>
+                                <input type="email" id="clientEmail" required placeholder="client@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone *</label>
+                                <input type="tel" id="clientPhone" required placeholder="Phone number">
+                            </div>
+                            <div class="form-group">
+                                <label>Event Type *</label>
+                                <select id="eventType" required>
+                                    <option value="">Select event type</option>
+                                    <option value="wedding">Wedding</option>
+                                    <option value="portrait">Portrait Session</option>
+                                    <option value="commercial">Commercial</option>
+                                    <option value="event">Event Coverage</option>
+                                    <option value="video">Video Production</option>
+                                    <option value="realestate">Real Estate</option>
+                                    <option value="product">Product Photography</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Package *</label>
+                                <select id="packageSelect" required onchange="updatePrice()">
+                                    <option value="">Select package</option>
+                                    <option value="basic">Basic - $500</option>
+                                    <option value="standard">Standard - $1,200</option>
+                                    <option value="premium">Premium - $2,500</option>
+                                    <option value="custom">Custom Quote</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Price ($) *</label>
+                                <input type="number" id="bookingPrice" required placeholder="0" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Event Date *</label>
+                                <input type="datetime-local" id="eventDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Duration (hours)</label>
+                                <input type="number" id="duration" placeholder="Estimated hours" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" id="location" placeholder="Event location">
+                            </div>
+                            <div class="form-group" style="grid-column: span 2;">
+                                <label>Special Requirements</label>
+                                <textarea id="requirements" rows="3" placeholder="Any special requirements or notes..."></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn" style="margin-top: 20px;">📸 Create Booking</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Portfolio Section -->
+            <div id="portfolio" class="section">
+                <h2 style="margin-bottom: 20px; color: var(--primary);">Portfolio Gallery</h2>
+                <div class="form-section">
+                    <h3 class="form-title">Add to Portfolio</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Image URL</label>
+                            <input type="url" id="portfolioUrl" placeholder="https://example.com/image.jpg">
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="portfolioCategory">
+                                <option value="wedding">Wedding</option>
+                                <option value="portrait">Portrait</option>
+                                <option value="commercial">Commercial</option>
+                                <option value="event">Event</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" id="portfolioDesc" placeholder="Brief description">
+                        </div>
+                    </div>
+                    <button class="btn" onclick="addToPortfolio()" style="margin-top: 15px;">➕ Add to Gallery</button>
+                </div>
+                <div class="portfolio-grid" id="portfolioGrid"></div>
+            </div>
+
+            <!-- Clients Section -->
+            <div id="clients" class="section">
+                <h2 style="margin-bottom: 20px; color: var(--primary);">Client Management</h2>
+                <div class="form-section">
+                    <h3 class="form-title">Add New Client</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Name *</label>
+                            <input type="text" id="newClientName" placeholder="Client name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" id="newClientEmail" placeholder="Email address">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="tel" id="newClientPhone" placeholder="Phone number">
+                        </div>
+                    </div>
+                    <button class="btn" onclick="addClient()" style="margin-top: 15px;">➕ Add Client</button>
+                </div>
+                <div class="client-list" id="clientList"></div>
+            </div>
+
+            <!-- Packages Section -->
+            <div id="packages" class="section">
+                <h2 style="margin-bottom: 20px; color: var(--primary);">Service Packages</h2>
+                <div class="form-section">
+                    <h3 class="form-title">Create Custom Package</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Package Name</label>
+                            <input type="text" id="packageName" placeholder="Package name">
+                        </div>
+                        <div class="form-group">
+                            <label>Price ($)</label>
+                            <input type="number" id="packagePrice" placeholder="Price">
+                        </div>
+                        <div class="form-group">
+                            <label>Duration (hours)</label>
+                            <input type="number" id="packageDuration" placeholder="Hours included">
+                        </div>
+                    </div>
+                    <button class="btn" onclick="addPackage()" style="margin-top: 15px;">➕ Add Package</button>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;" id="packagesGrid">
+                    <div class="package-card">
+                        <h3>📸 Basic Package</h3>
+                        <div class="package-price">$500</div>
+                        <ul style="list-style: none; margin: 20px 0;">
+                            <li>✓ 2 Hours Coverage</li>
+                            <li>✓ 50 Edited Photos</li>
+                            <li>✓ Online Gallery</li>
+                            <li>✓ Basic Retouching</li>
+                        </ul>
+                    </div>
+                    <div class="package-card">
+                        <h3>🎥 Standard Package</h3>
+                        <div class="package-price">$1,200</div>
+                        <ul style="list-style: none; margin: 20px 0;">
+                            <li>✓ 5 Hours Coverage</li>
+                            <li>✓ 150 Edited Photos</li>
+                            <li>✓ Highlight Video</li>
+                            <li>✓ Premium Retouching</li>
+                            <li>✓ Print Release</li>
+                        </ul>
+                    </div>
+                    <div class="package-card">
+                        <h3>👑 Premium Package</h3>
+                        <div class="package-price">$2,500</div>
+                        <ul style="list-style: none; margin: 20px 0;">
+                            <li>✓ Full Day Coverage</li>
+                            <li>✓ 400+ Edited Photos</li>
+                            <li>✓ Full Video Production</li>
+                            <li>✓ Drone Footage</li>
+                            <li>✓ Photo Album</li>
+                            <li>✓ Priority Editing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Storage
+        let bookings = JSON.parse(localStorage.getItem('photoBookings')) || [];
+        let clients = JSON.parse(localStorage.getItem('photoClients')) || [];
+        let portfolioItems = JSON.parse(localStorage.getItem('photoPortfolio')) || [];
+        let customPackages = JSON.parse(localStorage.getItem('photoPackages')) || [];
+
+        // Initialize with sample data if empty
+        if (bookings.length === 0) {
+            const sampleBookings = [
+                {
+                    id: 1,
+                    clientName: "Sarah Johnson",
+                    email: "sarah@email.com",
+                    phone: "555-0101",
+                    eventType: "wedding",
+                    package: "premium",
+                    price: 2500,
+                    eventDate: "2024-12-15T14:00",
+                    duration: 8,
+                    location: "Grand Plaza Hotel",
+                    requirements: "Outdoor ceremony, indoor reception",
+                    status: "confirmed",
+                    createdAt: new Date().toISOString()
+                },
+                {
+                    id: 2,
+                    clientName: "Mike Peters",
+                    email: "mike@email.com",
+                    phone: "555-0102",
+                    eventType: "portrait",
+                    package: "basic",
+                    price: 500,
+                    eventDate: "2024-12-20T10:00",
+                    duration: 2,
+                    location: "Central Park",
+                    requirements: "Family portrait session",
+                    status: "pending",
+                    createdAt: new Date().toISOString()
+                }
+            ];
+            bookings = sampleBookings;
+            saveData();
+        }
+
+        if (clients.length === 0) {
+            clients = [
+                { id: 1, name: "Sarah Johnson", email: "sarah@email.com", phone: "555-0101", totalBookings: 3 },
+                { id: 2, name: "Mike Peters", email: "mike@email.com", phone: "555-0102", totalBookings: 1 }
+            ];
+            saveData();
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('photoBookings', JSON.stringify(bookings));
+            localStorage.setItem('photoClients', JSON.stringify(clients));
+            localStorage.setItem('photoPortfolio', JSON.stringify(portfolioItems));
+            localStorage.setItem('photoPackages', JSON.stringify(customPackages));
+        }
+
+        // Navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+            updateDashboard();
+            if (sectionId === 'bookings') displayAllBookings();
+            if (sectionId === 'clients') displayClients();
+            if (sectionId === 'portfolio') displayPortfolio();
+        }
+
+        // Update Dashboard
+        function updateDashboard() {
+            document.getElementById('totalBookings').textContent = bookings.length;
+            const totalRevenue = bookings.reduce((sum, b) => sum + (parseFloat(b.price) || 0), 0);
+            document.getElementById('totalRevenue').textContent = '$' + totalRevenue.toLocaleString();
+            document.getElementById('totalClients').textContent = clients.length;
+            document.getElementById('completedJobs').textContent = bookings.filter(b => b.status === 'completed').length;
+
+            // Display upcoming bookings
+            const upcoming = bookings
+                .filter(b => b.status !== 'completed')
+                .sort((a, b) => new Date(a.eventDate) - new Date(b.eventDate))
+                .slice(0, 5);
+
+            const upcomingHtml = upcoming.map(booking => `
+                <div class="booking-card">
+                    <div class="booking-info">
+                        <h3>${booking.clientName} - ${booking.eventType}</h3>
+                        <div class="booking-detail">📅 ${new Date(booking.eventDate).toLocaleDateString()}</div>
+                        <div class="booking-detail">📍 ${booking.location || 'TBD'}</div>
+                        <div class="booking-detail">💰 $${booking.price}</div>
+                        <span class="booking-status status-${booking.status}">${booking.status}</span>
+                    </div>
+                    <div class="booking-actions">
+                        <button class="action-btn" onclick="changeStatus(${booking.id}, 'confirmed')" style="background: #28a745; color: white;">✓ Confirm</button>
+                        <button class="action-btn" onclick="changeStatus(${booking.id}, 'completed')" style="background: #17a2b8; color: white;">✓ Complete</button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('upcomingBookings').innerHTML = upcomingHtml || '<p>No upcoming bookings</p>';
+        }
+
+        // Create Booking
+        function createBooking(event) {
+            event.preventDefault();
+            
+            const newBooking = {
+                id: Date.now(),
+                clientName: document.getElementById('clientName').value,
+                email: document.getElementById('clientEmail').value,
+                phone: document.getElementById('clientPhone').value,
+                eventType: document.getElementById('eventType').value,
+                package: document.getElementById('packageSelect').value,
+                price: parseFloat(document.getElementById('bookingPrice').value),
+                eventDate: document.getElementById('eventDate').value,
+                duration: parseInt(document.getElementById('duration').value) || 0,
+                location: document.getElementById('location').value,
+                requirements: document.getElementById('requirements').value,
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            };
+
+            bookings.push(newBooking);
+            saveData();
+            
+            // Auto-add client if not exists
+            if (!clients.find(c => c.email === newBooking.email)) {
+                clients.push({
+                    id: Date.now(),
+                    name: newBooking.clientName,
+                    email: newBooking.email,
+                    phone: newBooking.phone,
+                    totalBookings: 1
+                });
+            }
+
+            alert('✅ Booking created successfully!');
+            document.getElementById('bookingForm').reset();
+            updateDashboard();
+            showSection('dashboard');
+        }
+
+        // Update price based on package selection
+        function updatePrice() {
+            const packagePrices = {
+                'basic': 500,
+                'standard': 1200,
+                'premium': 2500,
+                'custom': 0
+            };
+            const selected = document.getElementById('packageSelect').value;
+            document.getElementById('bookingPrice').value = packagePrices[selected] || '';
+        }
+
+        // Display all bookings
+        function displayAllBookings() {
+            const filter = document.getElementById('bookingFilter')?.value || 'all';
+            let filteredBookings = bookings;
+            
+            if (filter !== 'all') {
+                filteredBookings = bookings.filter(b => b.status === filter);
+            }
+
+            filteredBookings.sort((a, b) => new Date(b.eventDate) - new Date(a.eventDate));
+
+            const bookingsHtml = filteredBookings.map(booking => `
+                <div class="booking-card">
+                    <div class="booking-info">
+                        <h3>${booking.clientName} - ${booking.eventType.charAt(0).toUpperCase() + booking.eventType.slice(1)}</h3>
+                        <div class="booking-detail">📧 ${booking.email}</div>
+                        <div class="booking-detail">📱 ${booking.phone}</div>
+                        <div class="booking-detail">📅 ${new Date(booking.eventDate).toLocaleString()}</div>
+                        <div class="booking-detail">⏱️ ${booking.duration} hours</div>
+                        <div class="booking-detail">📍 ${booking.location || 'TBD'}</div>
+                        <div class="booking-detail">💼 ${booking.package}</div>
+                        <div class="booking-detail">💰 $${booking.price}</div>
+                        ${booking.requirements ? `<div class="booking-detail">📝 ${booking.requirements}</div>` : ''}
+                        <span class="booking-status status-${booking.status}">${booking.status}</span>
+                    </div>
+                    <div class="booking-actions">
+                        <button class="action-btn" onclick="changeStatus(${booking.id}, 'confirmed')" style="background: #28a745; color: white;">Confirm</button>
+                        <button class="action-btn" onclick="changeStatus(${booking.id}, 'completed')" style="background: #17a2b8; color: white;">Complete</button>
+                        <button class="action-btn" onclick="deleteBooking(${booking.id})" style="background: #dc3545; color: white;">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('allBookings').innerHTML = bookingsHtml || '<p>No bookings found</p>';
+        }
+
+        function filterBookings() {
+            displayAllBookings();
+        }
+
+        function changeStatus(id, newStatus) {
+            const booking = bookings.find(b => b.id === id);
+            if (booking) {
+                booking.status = newStatus;
+                saveData();
+                updateDashboard();
+                displayAllBookings();
+            }
+        }
+
+        function deleteBooking(id) {
+            if (confirm('Are you sure you want to delete this booking?')) {
+                bookings = bookings.filter(b => b.id !== id);
+                saveData();
+                updateDashboard();
+                displayAllBookings();
+            }
+        }
+
+        // Client management
+        function addClient() {
+            const name = document.getElementById('newClientName').value;
+            const email = document.getElementById('newClientEmail').value;
+            const phone = document.getElementById('newClientPhone').value;
+
+            if (!name || !email) {
+                alert('Please fill in required fields');
+                return;
+            }
+
+            clients.push({
+                id: Date.now(),
+                name,
+                email,
+                phone,
+                totalBookings: 0
+            });
+
+            saveData();
+            displayClients();
+            document.getElementById('newClientName').value = '';
+            document.getElementById('newClientEmail').value = '';
+            document.getElementById('newClientPhone').value = '';
+        }
+
+        function displayClients() {
+            const clientsHtml = clients.map(client => `
+                <div class="client-card">
+                    <div>
+                        <h3>${client.name}</h3>
+                        <div>📧 ${client.email}</div>
+                        <div>📱 ${client.phone || 'N/A'}</div>
+                        <div>📅 ${client.totalBookings} bookings</div>
+                    </div>
+                    <button class="action-btn" onclick="deleteClient(${client.id})" style="background: #dc3545; color: white;">Remove</button>
+                </div>
+            `).join('');
+
+            document.getElementById('clientList').innerHTML = clientsHtml || '<p>No clients added yet</p>';
+        }
+
+        function deleteClient(id) {
+            if (confirm('Remove this client?')) {
+                clients = clients.filter(c => c.id !== id);
+                saveData();
+                displayClients();
+            }
+        }
+
+        // Portfolio management
+        function addToPortfolio() {
+            const url = document.getElementById('portfolioUrl').value;
+            const category = document.getElementById('portfolioCategory').value;
+            const description = document.getElementById('portfolioDesc').value;
+
+            if (!url) {
+                alert('Please provide an image URL');
+                return;
+            }
+
+            portfolioItems.push({
+                id: Date.now(),
+                url,
+                category,
+                description,
+                addedAt: new Date().toISOString()
+            });
+
+            saveData();
+            displayPortfolio();
+            document.getElementById('portfolioUrl').value = '';
+            document.getElementById('portfolioDesc').value = '';
+        }
+
+        function displayPortfolio() {
+            const portfolioHtml = portfolioItems.map(item => `
+                <div class="portfolio-item">
+                    <img src="${item.url}" alt="${item.description}" onerror="this.parentElement.innerHTML='<span style=font-size:48px>🖼️</span><p>Image not available</p>'">
+                    <div class="portfolio-overlay">
+                        <h4>${item.category}</h4>
+                        <p>${item.description || 'No description'}</p>
+                        <button onclick="deletePortfolioItem(${item.id})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; margin-top: 10px;">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('portfolioGrid').innerHTML = portfolioHtml || '<p>No portfolio items yet. Add your work!</p>';
+        }
+
+        function deletePortfolioItem(id) {
+            portfolioItems = portfolioItems.filter(item => item.id !== id);
+            saveData();
+            displayPortfolio();
+        }
+
+        // Packages management
+        function addPackage() {
+            const name = document.getElementById('packageName').value;
+            const price = document.getElementById('packagePrice').value;
+            const duration = document.getElementById('packageDuration').value;
+
+            if (!name || !price) {
+                alert('Please fill in package details');
+                return;
+            }
+
+            customPackages.push({
+                id: Date.now(),
+                name,
+                price: parseFloat(price),
+                duration: parseInt(duration) || 0
+            });
+
+            saveData();
+            alert('Package added successfully!');
+            document.getElementById('packageName').value = '';
+            document.getElementById('packagePrice').value = '';
+            document.getElementById('packageDuration').value = '';
+        }
+
+        // Export bookings
+        function exportBookings() {
+            let csv = 'Client Name,Email,Phone,Event Type,Package,Price,Date,Status,Location\n';
+            bookings.forEach(b => {
+                csv += `"${b.clientName}","${b.email}","${b.phone}","${b.eventType}","${b.package}",${b.price},"${b.eventDate}","${b.status}","${b.location}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `bookings_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+        }
+
+        // Initial load
+        updateDashboard();
+        displayPortfolio();
+    </script>
+</body>
+  </html>
