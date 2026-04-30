@@ -1,953 +1,611 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhotoShot Pro - Photography Business Manager</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>WORD · interactive legend</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        :root {
-            --gold: #D4A574;
-            --gold-light: #E8C9A0;
-            --gold-dark: #B8860B;
-            --black: #1A1A1A;
-            --black-light: #2C2C2C;
-            --black-medium: #3D3D3D;
-            --brown: #8B4513;
-            --brown-light: #A0522D;
-            --brown-dark: #6B3410;
-            --white: #FFFFFF;
-            --cream: #FFF8F0;
-            --gray-light: #F5F5F5;
-            
-            --primary: var(--black);
-            --secondary: var(--brown);
-            --accent: var(--gold);
-            --accent-hover: var(--gold-dark);
-        }
+    body {
+      background: #f5f0e8;
+      font-family: 'Georgia', 'Times New Roman', 'Cormorant Garamond', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
 
-        body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            background: linear-gradient(135deg, #1A1A1A 0%, #2C1810 50%, #1A1A1A 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
+    /* main card – resembling the classic look */
+    .game-container {
+      max-width: 500px;
+      width: 100%;
+      background: #faf7f2;
+      border-radius: 48px 48px 40px 40px;
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.08), 0 10px 20px rgba(0, 0, 0, 0.05);
+      padding: 2rem 1.5rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid rgba(180, 160, 130, 0.25);
+      position: relative;
+      backdrop-filter: blur(2px);
+    }
 
-        .app-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: var(--cream);
-            min-height: 100vh;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            border-radius: 15px;
-            overflow: hidden;
-        }
+    /* title area: WORD + decorative L E G E N D */
+    .title-section {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      width: 100%;
+    }
 
-        .header {
-            background: linear-gradient(135deg, #1A1A1A 0%, #2C1810 100%);
-            color: var(--gold);
-            padding: 25px;
-            text-align: center;
-            border-bottom: 3px solid var(--gold);
-        }
+    .main-word {
+      font-size: 4.8rem;
+      font-weight: 500;
+      letter-spacing: 12px;
+      color: #2e2b26;
+      text-transform: uppercase;
+      line-height: 1;
+      font-family: 'Times New Roman', 'Georgia', serif;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.05);
+      margin-left: 8px; /* optical centering for letter-spacing */
+    }
 
-        .header h1 {
-            color: var(--gold);
-            margin-bottom: 15px;
-            font-size: 36px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
+    .legend-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.9rem;
+      margin-top: 0.2rem;
+      font-size: 1.7rem;
+      font-weight: 400;
+      letter-spacing: 5px;
+      color: #4a433a;
+      text-transform: uppercase;
+      font-family: 'Times New Roman', 'Georgia', serif;
+      opacity: 0.9;
+    }
 
-        .header h1 span {
-            color: var(--white);
-        }
+    .legend-letter {
+      display: inline-block;
+      transition: all 0.2s ease;
+    }
 
-        .nav-menu {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+    /* subtle divider */
+    .divider {
+      width: 70px;
+      height: 2px;
+      background: #d9cebc;
+      margin: 0.9rem auto 1.8rem;
+      border-radius: 2px;
+      opacity: 0.7;
+    }
 
-        .nav-btn {
-            background: var(--black-light);
-            color: var(--gold-light);
-            border: 2px solid var(--gold-dark);
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-            font-family: 'Georgia', serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+    /* Grid: 6 columns for letters L E G E N D */
+    .letters-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.9rem;
+      margin: 0.5rem 0 1.7rem;
+      width: 100%;
+    }
 
-        .nav-btn:hover {
-            background: var(--gold-dark);
-            color: var(--black);
-            border-color: var(--gold);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 165, 116, 0.3);
-        }
+    .letter-tile {
+      width: 62px;
+      height: 72px;
+      background: #ffffff;
+      border: 1.8px solid #cfc2ab;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 450;
+      color: #2e2a24;
+      text-transform: uppercase;
+      background: #fffdf9;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.04);
+      transition: all 0.18s ease;
+      font-family: 'Times New Roman', 'Georgia', serif;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+    }
 
-        .nav-btn.active {
-            background: var(--gold);
-            color: var(--black);
-            border-color: var(--gold);
-            font-weight: bold;
-            box-shadow: 0 0 20px rgba(212, 165, 116, 0.5);
-        }
+    .letter-tile.selected {
+      border-color: #b2976e;
+      background: #f9f3e8;
+      box-shadow: 0 0 0 3px rgba(190, 155, 100, 0.25);
+      transform: scale(1.02);
+    }
 
-        .main-content {
-            padding: 30px;
-            background: var(--cream);
-        }
+    .letter-tile.placed-correct {
+      background: #e7decb;
+      border-color: #a5906c;
+      color: #2d281f;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(140, 110, 70, 0.25);
+    }
 
-        .section {
-            display: none;
-        }
+    /* input row for letters */
+    .word-input-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin: 0.8rem 0 1.4rem;
+      flex-wrap: wrap;
+    }
 
-        .section.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
+    .letter-box {
+      width: 58px;
+      height: 66px;
+      background: #fefcf8;
+      border: 2px dashed #cfbba0;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.3rem;
+      font-weight: 450;
+      color: #5f5343;
+      text-transform: uppercase;
+      font-family: 'Times New Roman', 'Georgia', serif;
+      background: #fdfaf3;
+      transition: 0.15s;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .letter-box.filled {
+      border: 2px solid #b7a17c;
+      background: #f8f2e7;
+      color: #2e281f;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
 
-        h2 {
-            color: var(--black);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid var(--gold);
-        }
+    .action-buttons {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 0.6rem;
+      margin-bottom: 0.4rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
+    .btn {
+      background: #f3efe7;
+      border: 1.5px solid #cfbea2;
+      padding: 0.7rem 1.7rem;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 450;
+      color: #3e382e;
+      background: #faf7f0;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      letter-spacing: 0.4px;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.03);
+    }
 
-        .stat-card {
-            background: linear-gradient(135deg, #1A1A1A, #2C1810);
-            padding: 25px;
-            border-radius: 10px;
-            color: var(--gold);
-            text-align: center;
-            border: 2px solid var(--gold-dark);
-            transition: transform 0.3s;
-        }
+    .btn:hover {
+      background: #f2e9db;
+      border-color: #b1966f;
+      color: #2b241a;
+    }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.3);
-        }
+    .btn:active {
+      transform: scale(0.96);
+      background: #e7dac5;
+    }
 
-        .stat-card h3 {
-            font-size: 14px;
-            margin-bottom: 10px;
-            color: var(--gold-light);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+    .message-area {
+      min-height: 2.5rem;
+      margin: 1rem 0 0.2rem;
+      font-size: 1.15rem;
+      color: #5f4e38;
+      font-style: italic;
+      text-align: center;
+      font-weight: 430;
+      letter-spacing: 0.3px;
+      background: rgba(245, 240, 232, 0.7);
+      padding: 0.3rem 1.2rem;
+      border-radius: 30px;
+    }
 
-        .stat-card .number {
-            font-size: 36px;
-            font-weight: bold;
-            color: var(--gold);
-            text-shadow: 0 0 10px rgba(212, 165, 116, 0.5);
-        }
+    .download-btn {
+      background: #dbceb6;
+      border-color: #ab946f;
+      color: #2d281f;
+      font-weight: 500;
+      margin-top: 0.5rem;
+    }
 
-        .form-section {
-            background: var(--white);
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            border: 1px solid var(--gold-light);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
+    .download-btn:hover {
+      background: #cfbc9a;
+    }
 
-        .form-title {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: var(--brown);
-            border-bottom: 3px solid var(--gold);
-            padding-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: var(--brown-dark);
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--gold-light);
-            border-radius: 5px;
-            font-size: 14px;
-            font-family: 'Georgia', serif;
-            background: var(--cream);
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: var(--gold-dark);
-            outline: none;
-            background: white;
-            box-shadow: 0 0 10px rgba(212, 165, 116, 0.2);
-        }
-
-        .btn {
-            background: linear-gradient(135deg, var(--brown), var(--brown-dark));
-            color: var(--gold);
-            border: 2px solid var(--gold-dark);
-            padding: 12px 30px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'Georgia', serif;
-        }
-
-        .btn:hover {
-            background: var(--gold-dark);
-            color: var(--black);
-            border-color: var(--gold);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(212, 165, 116, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--black-light);
-            color: var(--gold-light);
-            border-color: var(--gold-dark);
-        }
-
-        .btn-secondary:hover {
-            background: var(--black-medium);
-            color: var(--gold);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #2D5016, #1A3009);
-            border-color: var(--gold-dark);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #8B0000, #4A0000);
-            border-color: var(--gold-dark);
-        }
-
-        .booking-card {
-            background: var(--white);
-            border: 2px solid var(--gold-light);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s;
-            border-left: 5px solid var(--gold);
-        }
-
-        .booking-card:hover {
-            border-color: var(--gold);
-            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .booking-info h3 {
-            color: var(--brown);
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        .booking-detail {
-            margin: 5px 0;
-            color: var(--black-medium);
-        }
-
-        .booking-status {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-top: 10px;
-            letter-spacing: 1px;
-        }
-
-        .status-pending {
-            background: linear-gradient(135deg, #FFF3CD, #FFE69C);
-            color: #856404;
-            border: 1px solid #FFD700;
-        }
-
-        .status-confirmed {
-            background: linear-gradient(135deg, #D4EDDA, #A8E6B2);
-            color: #155724;
-            border: 1px solid #28A745;
-        }
-
-        .status-completed {
-            background: linear-gradient(135deg, #D1ECF1, #8ECAD5);
-            color: #0C5460;
-            border: 1px solid #17A2B8;
-        }
-
-        .booking-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .action-btn {
-            padding: 8px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            color: white;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-family: 'Georgia', serif;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .client-card {
-            background: var(--white);
-            border: 2px solid var(--gold-light);
-            border-left: 5px solid var(--brown);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s;
-        }
-
-        .client-card:hover {
-            border-color: var(--gold);
-            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.2);
-        }
-
-        .package-card {
-            background: linear-gradient(135deg, var(--white), var(--cream));
-            border: 2px solid var(--gold-light);
-            border-radius: 10px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .package-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(139, 69, 19, 0.3);
-            background: linear-gradient(135deg, var(--cream), var(--white));
-        }
-
-        .package-price {
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--brown);
-            margin: 15px 0;
-            text-shadow: 1px 1px 2px rgba(212, 165, 116, 0.3);
-            border-bottom: 2px solid var(--gold);
-            padding-bottom: 15px;
-        }
-
-        .package-card h3 {
-            color: var(--black);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .package-card ul {
-            list-style: none;
-            text-align: left;
-            color: var(--brown-dark);
-        }
-
-        .package-card li {
-            margin: 8px 0;
-            padding-left: 5px;
-        }
-
-        select {
-            background: var(--cream);
-            border: 2px solid var(--gold-light);
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-family: 'Georgia', serif;
-        }
-
-        select:focus {
-            border-color: var(--gold-dark);
-            outline: none;
-        }
-
-        /* Empty state styling */
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: var(--brown);
-        }
-
-        .empty-state-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-
-        .empty-state p {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: var(--brown-dark);
-        }
-
-        @media (max-width: 768px) {
-            .nav-menu {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .nav-btn {
-                width: 100%;
-                text-align: center;
-            }
-            
-            .booking-card {
-                padding: 15px;
-            }
-            
-            .client-card {
-                flex-direction: column;
-                text-align: center;
-                gap: 10px;
-            }
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--cream);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--brown);
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--gold-dark);
-        }
-    </style>
+    @media (max-width: 450px) {
+      .letter-tile {
+        width: 52px;
+        height: 62px;
+        font-size: 2.1rem;
+      }
+      .letter-box {
+        width: 48px;
+        height: 58px;
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="app-container">
-        <div class="header">
-            <h1>Photo<span>Shot</span> Pro</h1>
-            <div class="nav-menu">
-                <button class="nav-btn active" onclick="showSection('dashboard', this)">📊 Dashboard</button>
-                <button class="nav-btn" onclick="showSection('bookings', this)">📅 Bookings</button>
-                <button class="nav-btn" onclick="showSection('new-booking', this)">➕ New Booking</button>
-                <button class="nav-btn" onclick="showSection('clients', this)">👥 Clients</button>
-                <button class="nav-btn" onclick="showSection('packages', this)">💎 Packages</button>
-            </div>
-        </div>
-
-        <div class="main-content">
-            <!-- Dashboard -->
-            <div id="dashboard" class="section active">
-                <h2>📊 Dashboard Overview</h2>
-                <div class="stats-grid" id="statsGrid"></div>
-                
-                <div class="form-section">
-                    <h3 class="form-title">Recent Bookings</h3>
-                    <div id="recentBookings"></div>
-                </div>
-            </div>
-
-            <!-- All Bookings -->
-            <div id="bookings" class="section">
-                <h2>📅 All Bookings</h2>
-                <div style="margin-bottom: 20px;">
-                    <select id="bookingFilter" onchange="filterBookings()" style="padding: 10px; border: 2px solid var(--gold-light); border-radius: 5px; background: var(--cream);">
-                        <option value="all">All Bookings</option>
-                        <option value="pending">Pending</option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="completed">Completed</option>
-                    </select>
-                    <button class="btn btn-secondary" onclick="exportBookings()" style="margin-left: 10px;">📥 Export CSV</button>
-                </div>
-                <div id="allBookingsList"></div>
-            </div>
-
-            <!-- New Booking -->
-
-
-            <!-- Clients -->
-            <div id="clients" class="section">
-                <h2>👥 Client Management</h2>
-                <div class="form-section">
-                    <h3 class="form-title">Add New Client</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Name *</label>
-                            <input type="text" id="newClientName" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Email *</label>
-                            <input type="email" id="newClientEmail" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone</label>
-                            <input type="text" id="newClientPhone">
-                        </div>
-                        <div class="form-group">
-                            <button class="btn" onclick="addClient()" style="margin-top: 23px;">➕ Add Client</button>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="form-title">Client List</h3>
-                <div id="clientList"></div>
-            </div>
-
-            <!-- Packages -->
-            <div id="packages" class="section">
-                <h2>💎 Service Packages</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                    <div class="package-card">
-                        <h3>📸 Basic Package</h3>
-                        <div class="package-price">sh 500</div>
-                        <ul>
-                            <li>✓ 2 Hours Coverage</li>
-                            <li>✓ 50 Edited Photos</li>
-                            <li>✓ Online Gallery</li>
-                            <li>✓ Basic Retouching</li>
-                        </ul>
-                    </div>
-                    <div class="package-card">
-                        <h3>🎥 Standard Package</h3>
-                        <div class="package-price">sh 1,200</div>
-                        <ul>
-                            <li>✓ 5 Hours Coverage</li>
-                            <li>✓ 150 Edited Photos</li>
-                            <li>✓ Highlight Video</li>
-                            <li>✓ Premium Retouching</li>
-                        </ul>
-                    </div>
-                    <div class="package-card">
-                        <h3>👑 Premium Package</h3>
-                        <div class="package-price">sh 2,500</div>
-                        <ul>
-                            <li>✓ Full Day Coverage</li>
-                            <li>✓ 400+ Edited Photos</li>
-                            <li>✓ Full Video Production</li>
-                            <li>✓ Drone Footage</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="game-container">
+  <!-- WORD title -->
+  <div class="title-section">
+    <div class="main-word">WORD</div>
+    <!-- L E G E N D underneath -->
+    <div class="legend-row" id="legendDisplay">
+      <span class="legend-letter">L</span>
+      <span class="legend-letter">E</span>
+      <span class="legend-letter">G</span>
+      <span class="legend-letter">E</span>
+      <span class="legend-letter">N</span>
+      <span class="legend-letter">D</span>
     </div>
+  </div>
 
-    <script>
-        // Initialize empty data
-        let bookings = [];
-        let clients = [];
+  <div class="divider"></div>
 
-        // Load data from localStorage
-        function loadData() {
-            try {
-                const savedBookings = localStorage.getItem('photoBookings');
-                const savedClients = localStorage.getItem('photoClients');
-                
-                if (savedBookings) {
-                    bookings = JSON.parse(savedBookings);
-                }
-                // No sample data - starts empty
-                
-                if (savedClients) {
-                    clients = JSON.parse(savedClients);
-                }
-                // No sample clients - starts empty
-            } catch (e) {
-                console.error('Error loading data:', e);
-                bookings = [];
-                clients = [];
-            }
+  <!-- interactive letter tiles (the LEGEND letters to choose from) -->
+  <div class="letters-grid" id="tileContainer">
+    <!-- dynamically filled with L,E,G,E,N,D -->
+  </div>
+
+  <!-- Word construction row: 6 slots for LEGEND -->
+  <div class="word-input-area" id="wordSlots">
+    <!-- 6 boxes for letters -->
+  </div>
+
+  <div class="action-buttons">
+    <button class="btn" id="clearBtn"><span>↺</span> Clear</button>
+    <button class="btn" id="shuffleBtn"><span>⟳</span> Shuffle</button>
+  </div>
+
+  <div class="message-area" id="messageBox">tap letters to form LEGEND</div>
+
+  <!-- Download button – saves the app as an HTML file -->
+  <button class="btn download-btn" id="downloadAppBtn">
+    <span>⬇️</span> Download App
+  </button>
+</div>
+
+<script>
+  (function() {
+    // ----- GAME STATE -----
+    const TARGET_WORD = "LEGEND"; 
+    const TARGET_LETTERS = ['L', 'E', 'G', 'E', 'N', 'D'];
+    
+    // Current arrangement of tiles (order can be shuffled)
+    let currentTiles = [...TARGET_LETTERS];
+    
+    // Slots: array of 6, each either empty string or a letter
+    let slots = ['', '', '', '', '', ''];
+    
+    // Currently selected tile index (in tileContainer), -1 if none
+    let selectedTileIndex = -1;
+    
+    // DOM elements
+    const tileContainer = document.getElementById('tileContainer');
+    const wordSlotsContainer = document.getElementById('wordSlots');
+    const messageBox = document.getElementById('messageBox');
+    const clearBtn = document.getElementById('clearBtn');
+    const shuffleBtn = document.getElementById('shuffleBtn');
+    const downloadBtn = document.getElementById('downloadAppBtn');
+    const legendDisplayLetters = document.querySelectorAll('.legend-letter');
+    
+    // ----- HELPER: update UI completely -----
+    function renderAll() {
+      renderTiles();
+      renderSlots();
+      updateLegendHighlight();
+      checkWinCondition();
+    }
+    
+    // Render the draggable letter tiles
+    function renderTiles() {
+      tileContainer.innerHTML = '';
+      currentTiles.forEach((letter, idx) => {
+        const tileDiv = document.createElement('div');
+        tileDiv.className = 'letter-tile';
+        // add selected class if this tile is currently selected
+        if (idx === selectedTileIndex) {
+          tileDiv.classList.add('selected');
         }
-
-        // Save data to localStorage
-        function saveData() {
-            try {
-                localStorage.setItem('photoBookings', JSON.stringify(bookings));
-                localStorage.setItem('photoClients', JSON.stringify(clients));
-            } catch (e) {
-                console.error('Error saving data:', e);
-            }
+        // check if this tile is already placed in any slot (visual clue)
+        // We'll indicate if the tile is used (placed) by checking if it's already assigned to a slot?
+        // But multiple same letters: better approach: mark tiles that are "used" 
+        // We'll track placed tile indices in a set.
+        const placedTileIndices = getPlacedTileIndices();
+        if (placedTileIndices.has(idx)) {
+          tileDiv.classList.add('placed-correct');
         }
-
-        // Show different sections
-        function showSection(sectionId, btn) {
-            // Hide all sections
-            document.querySelectorAll('.section').forEach(s => {
-                s.classList.remove('active');
-            });
-            
-            // Remove active from all buttons
-            document.querySelectorAll('.nav-btn').forEach(b => {
-                b.classList.remove('active');
-            });
-            
-            // Show selected section
-            const section = document.getElementById(sectionId);
-            if (section) {
-                section.classList.add('active');
-            }
-            
-            // Highlight clicked button
-            if (btn) {
-                btn.classList.add('active');
-            }
-            
-            // Update content based on section
-            if (sectionId === 'dashboard') updateDashboard();
-            if (sectionId === 'bookings') displayAllBookings();
-            if (sectionId === 'clients') displayClients();
-        }
-
-        // Update Dashboard
-        function updateDashboard() {
-            // Stats
-            const statsGrid = document.getElementById('statsGrid');
-            if (!statsGrid) return;
-            
-            const totalRevenue = bookings.reduce((sum, b) => sum + (parseFloat(b.price) || 0), 0);
-            const completedJobs = bookings.filter(b => b.status === 'completed').length;
-            
-            statsGrid.innerHTML = `
-                <div class="stat-card">
-                    <h3>Total Bookings</h3>
-                    <div class="number">${bookings.length}</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Total Revenue</h3>
-                    <div class="number">sh ${totalRevenue.toLocaleString()}</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Total Clients</h3>
-                    <div class="number">${clients.length}</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Completed Jobs</h3>
-                    <div class="number">${completedJobs}</div>
-                </div>
-            `;
-            
-            // Recent bookings
-            const recentBookingsDiv = document.getElementById('recentBookings');
-            if (!recentBookingsDiv) return;
-            
-            const recent = bookings
-                .sort((a, b) => b.id - a.id)
-                .slice(0, 5);
-            
-            if (recent.length === 0) {
-                recentBookingsDiv.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📸</div>
-                        <p>No bookings yet. Start by creating your first booking!</p>
-                        <button class="btn" onclick="showSection('new-booking', document.querySelectorAll('.nav-btn')[2])">Create Your First Booking</button>
-                    </div>
-                `;
-                return;
-            }
-            
-            recentBookingsDiv.innerHTML = recent.map(booking => `
-                <div class="booking-card">
-                    <div class="booking-info">
-                        <h3>${booking.clientName} - ${booking.eventType}</h3>
-                        <div class="booking-detail">📅 ${new Date(booking.eventDate).toLocaleString()}</div>
-                        <div class="booking-detail">📍 ${booking.location || 'No location'}</div>
-                        <div class="booking-detail">💰 sh ${booking.price}</div>
-                        <span class="booking-status status-${booking.status}">${booking.status}</span>
-                    </div>
-                    <div class="booking-actions">
-                        <button class="action-btn btn-success" onclick="changeStatus(${booking.id}, 'confirmed')">✓ Confirm</button>
-                        <button class="action-btn" style="background: #17a2b8;" onclick="changeStatus(${booking.id}, 'completed')">✓ Complete</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Display all bookings
-        function displayAllBookings(filter = 'all') {
-            const container = document.getElementById('allBookingsList');
-            if (!container) return;
-            
-            let filteredBookings = filter === 'all' 
-                ? bookings 
-                : bookings.filter(b => b.status === filter);
-            
-            filteredBookings.sort((a, b) => new Date(b.eventDate) - new Date(a.eventDate));
-            
-            if (filteredBookings.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📅</div>
-                        <p>No bookings found. Create your first booking to get started!</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = filteredBookings.map(booking => `
-                <div class="booking-card">
-                    <div class="booking-info">
-                        <h3>${booking.clientName} - ${booking.eventType.toUpperCase()}</h3>
-                        <div class="booking-detail">📧 ${booking.email}</div>
-                        <div class="booking-detail">📱 ${booking.phone}</div>
-                        <div class="booking-detail">📅 ${new Date(booking.eventDate).toLocaleString()}</div>
-                        <div class="booking-detail">⏱️ ${booking.duration || 0} hours</div>
-                        <div class="booking-detail">📍 ${booking.location || 'N/A'}</div>
-                        <div class="booking-detail">💼 ${booking.package}</div>
-                        <div class="booking-detail">💰 sh ${booking.price}</div>
-                        ${booking.requirements ? `<div class="booking-detail">📝 ${booking.requirements}</div>` : ''}
-                        <span class="booking-status status-${booking.status}">${booking.status}</span>
-                    </div>
-                    <div class="booking-actions">
-                        <button class="action-btn btn-success" onclick="changeStatus(${booking.id}, 'confirmed')">Confirm</button>
-                        <button class="action-btn" style="background: #17a2b8;" onclick="changeStatus(${booking.id}, 'completed')">Complete</button>
-                        <button class="action-btn btn-danger" onclick="deleteBooking(${booking.id})">Delete</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Filter bookings
-        function filterBookings() {
-            const filter = document.getElementById('bookingFilter').value;
-            displayAllBookings(filter);
-        }
-
-        // Create new booking
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const newBooking = {
-                id: Date.now(),
-                clientName: document.getElementById('clientName').value,
-                email: document.getElementById('clientEmail').value,
-                phone: document.getElementById('clientPhone').value,
-                eventType: document.getElementById('eventType').value,
-                package: document.getElementById('packageSelect').value,
-                price: parseFloat(document.getElementById('bookingPrice').value) || 0,
-                eventDate: document.getElementById('eventDate').value,
-                duration: parseInt(document.getElementById('duration').value) || 0,
-                location: document.getElementById('location').value,
-                requirements: document.getElementById('requirements').value,
-                status: 'pending',
-                createdAt: new Date().toISOString()
-            };
-            
-            bookings.push(newBooking);
-            
-            // Add client if not exists
-            const clientExists = clients.find(c => c.email === newBooking.email);
-            if (!clientExists) {
-                clients.push({
-                    id: Date.now(),
-                    name: newBooking.clientName,
-                    email: newBooking.email,
-                    phone: newBooking.phone
-                });
-            }
-            
-            saveData();
-            alert('✅ Booking created successfully!');
-            this.reset();
-            updateDashboard();
-            showSection('dashboard', document.querySelector('.nav-btn'));
-        });
-
-        // Update price based on package
-        function updatePrice() {
-            const prices = {
-                'basic': 500,
-                'standard': 1200,
-                'premium': 2500
-            };
-            const selected = document.getElementById('packageSelect').value;
-            if (prices[selected]) {
-                document.getElementById('bookingPrice').value = prices[selected];
-            }
-        }
-
-        // Change booking status
-        function changeStatus(id, newStatus) {
-            const booking = bookings.find(b => b.id === id);
-            if (booking) {
-                booking.status = newStatus;
-                saveData();
-                updateDashboard();
-                if (document.getElementById('bookings').classList.contains('active')) {
-                    displayAllBookings();
-                }
-            }
-        }
-
-        // Delete booking
-        function deleteBooking(id) {
-            if (confirm('Are you sure you want to delete this booking?')) {
-                bookings = bookings.filter(b => b.id !== id);
-                saveData();
-                updateDashboard();
-                displayAllBookings();
-            }
-        }
-
-        // Add client
-        function addClient() {
-            const name = document.getElementById('newClientName').value;
-            const email = document.getElementById('newClientEmail').value;
-            const phone = document.getElementById('newClientPhone').value;
-            
-            if (!name || !email) {
-                alert('Please fill in name and email');
-                return;
-            }
-            
-            clients.push({
-                id: Date.now(),
-                name: name,
-                email: email,
-                phone: phone
-            });
-            
-            saveData();
-            displayClients();
-            alert('Client added successfully!');
-            
-            // Clear form
-            document.getElementById('newClientName').value = '';
-            document.getElementById('newClientEmail').value = '';
-            document.getElementById('newClientPhone').value = '';
-        }
-
-        // Display clients
-        function displayClients() {
-            const container = document.getElementById('clientList');
-            if (!container) return;
-            
-            if (clients.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">👥</div>
-                        <p>No clients added yet. Add your first client or create a booking to automatically add clients.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = clients.map(client => {
-                const clientBookings = bookings.filter(b => b.email === client.email);
-                return `
-                    <div class="client-card">
-                        <div>
-                            <h3 style="color: var(--brown);">${client.name}</h3>
-                            <div style="color: var(--black-medium);">📧 ${client.email}</div>
-                            <div style="color: var(--black-medium);">📱 ${client.phone || 'N/A'}</div>
-                            <div style="color: var(--brown-dark);">📅 Bookings: ${clientBookings.length}</div>
-                        </div>
-                        <button class="action-btn btn-danger" onclick="deleteClient(${client.id})">Remove</button>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Delete client
-        function deleteClient(id) {
-            if (confirm('Remove this client?')) {
-                clients = clients.filter(c => c.id !== id);
-                saveData();
-                displayClients();
-            }
-        }
-
-        // Export bookings to CSV
-        function exportBookings() {
-            if (bookings.length === 0) {
-                alert('No bookings to export!');
-                return;
-            }
-            
-            let csv = 'Client Name,Email,Phone,Event Type,Package,Price,Date,Status,Location,Requirements\n';
-            bookings.forEach(b => {
-                csv += `"${b.clientName}","${b.email}","${b.phone}","${b.eventType}","${b.package}",sh ${b.price},"${b.eventDate}","${b.status}","${b.location || ''}","${b.requirements || ''}"\n`;
-            });
-            
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `bookings_${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
-        }
-
-        // Initialize app
-        loadData();
-        updateDashboard();
         
-        console.log('PhotoShot Pro - Ready for your real clients! 📸');
-    </script>
+        tileDiv.textContent = letter;
+        tileDiv.dataset.index = idx;
+        tileDiv.dataset.letter = letter;
+        
+        tileDiv.addEventListener('click', (e) => handleTileClick(idx));
+        tileContainer.appendChild(tileDiv);
+      });
+    }
+    
+    // Returns a Set of tile indices that are currently placed in slots
+    function getPlacedTileIndices() {
+      const placed = new Set();
+      // We need mapping: each slot holds a letter, but we must know which tile index it came from.
+      // We'll use a parallel array slotTileIndex[slotPos] = tileIndex or -1
+      // We'll maintain that state.
+      if (!window.slotTileMap) {
+        window.slotTileMap = [-1, -1, -1, -1, -1, -1];
+      }
+      window.slotTileMap.forEach(tileIdx => {
+        if (tileIdx !== -1) placed.add(tileIdx);
+      });
+      return placed;
+    }
+    
+    // Initialize slot-tile mapping if not exists
+    if (!window.slotTileMap) {
+      window.slotTileMap = [-1, -1, -1, -1, -1, -1];
+    }
+    
+    // Update slotTileMap based on current slots and tile letters (complex but we manage carefully)
+    function syncSlotTileMapAfterChange() {
+      // This rebuilds slotTileMap by searching for each slot's letter in currentTiles,
+      // avoiding duplicate tile indices. More robust: maintain assignment when placing/clearing.
+      // We'll keep it consistent by updating on place/clear actions.
+    }
+    
+    // Render the 6 word slots
+    function renderSlots() {
+      wordSlotsContainer.innerHTML = '';
+      for (let i = 0; i < 6; i++) {
+        const slotBox = document.createElement('div');
+        slotBox.className = 'letter-box';
+        if (slots[i] !== '') {
+          slotBox.classList.add('filled');
+          slotBox.textContent = slots[i];
+        } else {
+          slotBox.textContent = '';
+        }
+        // Allow clicking on a filled slot to remove that letter (return to tiles)
+        slotBox.addEventListener('click', (e) => handleSlotClick(i));
+        wordSlotsContainer.appendChild(slotBox);
+      }
+    }
+    
+    // Handle tile click: select or place
+    function handleTileClick(tileIndex) {
+      const letter = currentTiles[tileIndex];
+      
+      // If this tile is already placed in a slot, we might want to remove it? 
+      // Better: if tile is already placed, clicking it could remove from slot (unplace).
+      const placedIndices = getPlacedTileIndices();
+      if (placedIndices.has(tileIndex)) {
+        // Tile is already used: find which slot it occupies and clear that slot
+        const slotPos = window.slotTileMap.indexOf(tileIndex);
+        if (slotPos !== -1) {
+          // Clear that slot
+          slots[slotPos] = '';
+          window.slotTileMap[slotPos] = -1;
+          // Deselect any selection
+          clearSelection();
+          renderAll();
+          return;
+        }
+      }
+      
+      // If no tile selected, select this tile (if not placed)
+      if (selectedTileIndex === -1) {
+        // Select this tile
+        selectedTileIndex = tileIndex;
+        renderAll();
+        return;
+      }
+      
+      // A tile is already selected
+      if (selectedTileIndex === tileIndex) {
+        // Deselect
+        clearSelection();
+        renderAll();
+        return;
+      }
+      
+      // Different tile selected: we could swap selection or place the previously selected?
+      // Better UX: If another tile selected, we deselect previous and select new one.
+      // But also allow placing the selected tile into empty slot by clicking slot? We'll keep selection.
+      // So just change selection to new tile.
+      selectedTileIndex = tileIndex;
+      renderAll();
+      return;
+    }
+    
+    // Handle clicking on a slot box
+    function handleSlotClick(slotIndex) {
+      // If slot has a letter, remove it (return tile to pool)
+      if (slots[slotIndex] !== '') {
+        // Find tile index that occupies this slot
+        const tileIdx = window.slotTileMap[slotIndex];
+        // Clear slot
+        slots[slotIndex] = '';
+        if (tileIdx !== -1) {
+          window.slotTileMap[slotIndex] = -1;
+        }
+        // Also clear selection if any
+        clearSelection();
+        renderAll();
+        return;
+      }
+      
+      // Slot is empty: try to place the currently selected tile here
+      if (selectedTileIndex === -1) {
+        messageBox.textContent = 'Select a letter tile first';
+        return;
+      }
+      
+      // Check if selected tile is already placed (shouldn't happen if we prevent, but just in case)
+      if (getPlacedTileIndices().has(selectedTileIndex)) {
+        messageBox.textContent = 'That tile is already used';
+        clearSelection();
+        renderAll();
+        return;
+      }
+      
+      // Place the selected tile into this empty slot
+      const letterToPlace = currentTiles[selectedTileIndex];
+      slots[slotIndex] = letterToPlace;
+      window.slotTileMap[slotIndex] = selectedTileIndex;
+      
+      // Clear selection after placement
+      clearSelection();
+      renderAll();
+    }
+    
+    function clearSelection() {
+      selectedTileIndex = -1;
+    }
+    
+    // Clear all slots
+    function clearAllSlots() {
+      slots = ['', '', '', '', '', ''];
+      window.slotTileMap = [-1, -1, -1, -1, -1, -1];
+      clearSelection();
+      renderAll();
+      messageBox.textContent = 'Cleared. Build LEGEND';
+    }
+    
+    // Shuffle the tiles (only unplaced tiles? Better shuffle all tiles but maintain placed assignments?)
+    // To keep it intuitive: Shuffle rearranges tile order, but placed letters remain in slots.
+    // However, placed tiles correspond to tile indices; shuffling changes indices -> breaks mapping.
+    // Simplest: Shuffle only allowed when no tiles are placed? Or reset placement on shuffle.
+    // Good UX: Shuffle clears all slots and shuffles all tiles fresh.
+    function shuffleTiles() {
+      // Clear all slots first
+      slots = ['', '', '', '', '', ''];
+      window.slotTileMap = [-1, -1, -1, -1, -1, -1];
+      clearSelection();
+      
+      // Fisher–Yates shuffle on currentTiles
+      for (let i = currentTiles.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [currentTiles[i], currentTiles[j]] = [currentTiles[j], currentTiles[i]];
+      }
+      renderAll();
+      messageBox.textContent = 'Tiles shuffled. Form LEGEND';
+    }
+    
+    // Check win condition
+    function checkWinCondition() {
+      const formedWord = slots.join('');
+      if (formedWord === TARGET_WORD) {
+        messageBox.textContent = '✨ Perfect! You formed LEGEND ✨';
+        // Additional celebration: briefly change legend color
+        legendDisplayLetters.forEach(span => {
+          span.style.color = '#b3925c';
+          span.style.fontWeight = '500';
+        });
+        setTimeout(() => {
+          legendDisplayLetters.forEach(span => {
+            span.style.color = '#4a433a';
+            span.style.fontWeight = '400';
+          });
+        }, 1000);
+      } else if (formedWord.length === 6 && formedWord !== TARGET_WORD) {
+        messageBox.textContent = 'Not quite LEGEND. Keep trying.';
+      } else if (slots.some(s => s !== '')) {
+        messageBox.textContent = 'Building...';
+      } else {
+        messageBox.textContent = 'tap letters to form LEGEND';
+      }
+    }
+    
+    function updateLegendHighlight() {
+      // Reset all legend letters style
+      legendDisplayLetters.forEach(span => {
+        span.style.color = '#4a433a';
+        span.style.fontWeight = '400';
+      });
+      // Highlight letters that are correctly placed in matching positions?
+      // optional: show which position is correct
+      for (let i = 0; i < 6; i++) {
+        if (slots[i] === TARGET_LETTERS[i]) {
+          if (legendDisplayLetters[i]) {
+            legendDisplayLetters[i].style.color = '#b3925c';
+            legendDisplayLetters[i].style.fontWeight = '500';
+          }
+        }
+      }
+    }
+    
+    // Reset/initialize game
+    function resetGame() {
+      currentTiles = [...TARGET_LETTERS];
+      slots = ['', '', '', '', '', ''];
+      window.slotTileMap = [-1, -1, -1, -1, -1, -1];
+      clearSelection();
+      renderAll();
+      messageBox.textContent = 'tap letters to form LEGEND';
+    }
+    
+    // Event Listeners
+    clearBtn.addEventListener('click', clearAllSlots);
+    shuffleBtn.addEventListener('click', shuffleTiles);
+    
+    // Download function: create HTML file and trigger download
+    function downloadApp() {
+      // Get the whole HTML content of the page
+      const doctype = '<!DOCTYPE html>\n';
+      const html = document.documentElement.outerHTML;
+      
+      // Create a Blob
+      const blob = new Blob([doctype + html], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'WORD_LEGEND_game.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      messageBox.textContent = '📥 App downloaded! Open the file.';
+      setTimeout(() => {
+        if (messageBox.textContent.includes('downloaded')) {
+          messageBox.textContent = 'tap letters to form LEGEND';
+        }
+      }, 2500);
+    }
+    
+    downloadBtn.addEventListener('click', downloadApp);
+    
+    // Initial render
+    resetGame();
+    
+    // Additional: ensure legend letters are clickable? Not needed, but nice.
+    // Also make legend display interactive? We'll keep decorative.
+  })();
+</script>
 </body>
 </html>
