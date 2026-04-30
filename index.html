@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>WORD CIRCLE · unlimited levels</title>
+  <title>WORD CIRCLE · Dictionary Words</title>
   <style>
     * {
       margin: 0;
@@ -35,7 +35,6 @@
       position: relative;
     }
 
-    /* Pages */
     .page {
       display: none;
       flex-direction: column;
@@ -47,7 +46,6 @@
       display: flex;
     }
 
-    /* Menu page */
     .menu-title {
       font-size: 4rem;
       letter-spacing: 12px;
@@ -55,11 +53,12 @@
       margin: 1rem 0 0.5rem;
       font-weight: 500;
     }
+
     .menu-sub {
       font-size: 1.6rem;
       letter-spacing: 8px;
       color: #6b5c46;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
     }
 
     .level-info {
@@ -72,19 +71,16 @@
       color: #4d3f2b;
     }
 
-    .circle-preview {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      background: #fefcf7;
-      margin: 1rem 0;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.06);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      color: #b3925c;
-      border: 2px dashed #cfbc9a;
+    .word-list-preview {
+      background: #faf5ec;
+      padding: 0.8rem 1.5rem;
+      border-radius: 2rem;
+      margin: 0.8rem 0;
+      font-size: 0.95rem;
+      color: #5f4e38;
+      max-width: 280px;
+      text-align: center;
+      border: 1px dashed #cfbc9a;
     }
 
     .btn {
@@ -111,6 +107,7 @@
       background: #efe2ce;
       border-color: #b99b6c;
     }
+
     .btn:active {
       transform: scale(0.96);
     }
@@ -120,7 +117,6 @@
       border-color: #b3925c;
     }
 
-    /* Game page */
     .game-header {
       display: flex;
       justify-content: space-between;
@@ -128,6 +124,7 @@
       align-items: center;
       margin-bottom: 0.5rem;
     }
+
     .level-badge {
       background: #e7d9c2;
       padding: 0.4rem 1.2rem;
@@ -142,11 +139,12 @@
       color: #3f3527;
       font-weight: 500;
     }
+
     .legend-sub {
       font-size: 1.5rem;
       letter-spacing: 7px;
       color: #6b5c46;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.5rem;
     }
 
     .circle-container {
@@ -164,23 +162,37 @@
       height: auto;
       aspect-ratio: 1/1;
       border-radius: 50%;
-      background: #fefcf7;
-      box-shadow: 0 15px 30px rgba(100,70,30,0.1), inset 0 0 20px rgba(210,180,120,0.25);
+      background: #f5f0e8;
+      box-shadow: 0 15px 30px rgba(100,70,30,0.08), inset 0 0 30px rgba(180,150,100,0.15);
       touch-action: none;
       cursor: pointer;
     }
 
     .word-display {
-      margin: 0.8rem 0;
-      font-size: 2.2rem;
-      letter-spacing: 4px;
-      min-height: 3.2rem;
+      margin: 0.6rem 0;
+      font-size: 2rem;
+      letter-spacing: 3px;
+      min-height: 3rem;
       background: #faf5ec;
       padding: 0.2rem 2rem;
       border-radius: 3rem;
       color: #4b3c28;
       border: 1px dashed #cbb594;
       text-transform: uppercase;
+    }
+
+    .found-words-area {
+      background: #f9f4eb;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2rem;
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+      color: #5f4e38;
+      max-width: 320px;
+      text-align: center;
+      border: 1px solid #d9c9ab;
+      max-height: 80px;
+      overflow-y: auto;
     }
 
     .button-row {
@@ -197,40 +209,40 @@
       margin: 0.4rem 0;
       min-height: 1.6rem;
     }
-
-    .hidden {
-      display: none;
-    }
   </style>
 </head>
 <body>
 <div class="app-container" id="appContainer">
-  <!-- PAGE 1: MENU / LEVEL SELECT -->
+  <!-- MENU PAGE -->
   <div class="page active" id="menuPage">
     <div class="menu-title">WORD</div>
-    <div class="menu-sub">L E G E N D</div>
-    <div class="circle-preview">🌀</div>
+    <div class="menu-sub">CIRCLE</div>
     <div class="level-info" id="levelDisplayMenu">Level 1</div>
+    <div class="word-list-preview" id="wordPreviewMenu">Letters: L E G E N D</div>
     <button class="btn" id="playBtn">▶ Play</button>
     <button class="btn" id="nextLevelBtnMenu">⏭ Next Level</button>
     <button class="btn music-toggle" id="musicToggleMenu">🎵 Music On</button>
-    <p style="margin-top:1rem; color:#5f4e38;">unlimited levels · finger connect</p>
+    <p style="margin-top:1rem; color:#5f4e38;">find all words · finger connect</p>
   </div>
 
-  <!-- PAGE 2: GAME PAGE -->
+  <!-- GAME PAGE -->
   <div class="page" id="gamePage">
     <div class="game-header">
       <span class="level-badge" id="levelBadge">Level 1</span>
       <button class="btn" id="backToMenuBtn" style="padding:0.4rem 1.2rem;">☰ Menu</button>
     </div>
     <div class="word-title">WORD</div>
-    <div class="legend-sub">L E G E N D</div>
+    <div class="legend-sub" id="letterDisplay">L E G E N D</div>
 
     <div class="circle-container">
       <canvas id="letterCanvas" width="400" height="400" aria-label="Circle of letters"></canvas>
     </div>
 
     <div class="word-display" id="formedWordDisplay">·······</div>
+    
+    <div class="found-words-area" id="foundWordsArea">
+      <span style="opacity:0.7;">found words appear here</span>
+    </div>
 
     <div class="button-row">
       <button class="btn" id="shuffleBtn"><span>⟳</span> Shuffle</button>
@@ -245,32 +257,68 @@
 
 <script>
   (function() {
-    // ----- AUDIO ENGINE (Web Audio API) -----
-    let audioCtx = null;
-    let musicGain = null;
-    let musicOscillators = [];
-    let musicPlaying = true;
-    let currentMusicNoteIndex = 0;
-    let musicInterval = null;
+    // ============ COMPREHENSIVE DICTIONARY ============
+    // Words organized by letter sets. Each level will use a set of letters.
+    // Format: { letters: "SORTED", words: ["word1", "word2", ...] }
     
-    // Simple melody notes (frequencies in Hz) – gentle ambient
-    const melodyNotes = [262, 294, 330, 349, 392, 349, 330, 294]; // C D E F G F E D
-    const noteDuration = 400; // ms per note
+    const wordSets = [
+      // LEGEND set
+      { letters: "DEEGLN", display: "L E G E N D", words: ["LEGEND", "LEG", "END", "GEL", "LED", "LEE", "NEED", "GLEE", "GLEN", "DEN", "GENE", "EDGE", "LEDGE", "LEND", "GELD", "GLED", "DEEN", "DELE", "DENE", "EGG", "ENG", "NED", "NEE", "EEL", "ELD", "GEN", "NEG", "DEE", "LEED", "LENG", "NEELE", "LEGE", "GED", "DEG"] },
+      
+      // POTS/SPOT/TOP/STOP set
+      { letters: "OPST", display: "P O T S", words: ["POT", "TOP", "STOP", "SPOT", "TOPS", "POTS", "OPT", "OPTS", "POST", "SOP", "SOT", "OPS", "PST", "TOSS", "POS", "POT", "TOPS", "SPOTS", "STOPS", "POTS"] },
+      
+      // STAR/ARTS/RATS set
+      { letters: "ARST", display: "S T A R", words: ["STAR", "ARTS", "RATS", "TARS", "ART", "RAT", "SAT", "TAR", "ARS", "RAS", "TAS", "SAR", "ST", "RAST", "TRS", "SART", "ASTR", "STRA"] },
+      
+      // HEART/EARTH/HATE set
+      { letters: "AEHRT", display: "H E A R T", words: ["HEART", "EARTH", "HATE", "HEAT", "RATE", "TEAR", "HARE", "HEAR", "ART", "HAT", "RAT", "TAR", "ARE", "EAR", "ERA", "HER", "THE", "HERT", "TARE", "THAE", "HART", "RATH", "TEHR", "HATER", "REH", "HAE", "ETH"] },
+      
+      // FRIEND/FINDER set
+      { letters: "DEFINR", display: "F R I E N D", words: ["FRIEND", "FIND", "FIRE", "RIDE", "DINE", "FINE", "REIN", "RIND", "DIRE", "FEND", "FIER", "FIRN", "NERD", "REND", "RIFE", "DEFI", "DEN", "END", "FED", "FEN", "FER", "DIE", "DIN", "FIN", "FIR", "RED", "REF", "RID", "RIN"] },
+      
+      // PLANET/PLATE set
+      { letters: "AELNPT", display: "P L A N E T", words: ["PLANET", "PLATE", "PLANE", "PLANT", "LEAP", "PALE", "PANE", "PANT", "TALE", "TAPE", "LANE", "LATE", "LEAN", "NEAT", "PAL", "PAN", "PAT", "PEN", "PET", "TAP", "TEN", "NET", "LET", "LAP", "APE", "EAT", "ATE", "ANT", "ALE"] },
+      
+      // MUSIC set
+      { letters: "CIMSU", display: "M U S I C", words: ["MUSIC", "SUM", "SIC", "SIM", "CUM", "MUS", "SUC", "MIC", "CIS", "UMS", "ISM", "MICS", "SCUM", "CUS", "MUSC", "SUMI"] },
+      
+      // WATER set
+      { letters: "AERTW", display: "W A T E R", words: ["WATER", "WEAR", "WARE", "RATE", "TEAR", "WART", "WET", "WAR", "RAW", "TAR", "RAT", "ARE", "EAR", "ERA", "ATE", "EAT", "TAW", "TEW", "WAE", "ART", "AWE", "WAT", "REW", "TAER", "TWAE"] },
+      
+      // GARDEN set
+      { letters: "ADEGNR", display: "G A R D E N", words: ["GARDEN", "RANGE", "GRAND", "ANGER", "DARE", "DEAR", "EARN", "GRADE", "READ", "REND", "DANG", "GARN", "NERD", "RAGE", "DARN", "AGED", "AND", "ARE", "DEN", "END", "GAD", "RAG", "RAN", "RED", "DAG", "DAN", "DEG", "ENG", "ERA", "GED", "GEN", "NAG", "NED", "RAD", "REG"] },
+      
+      // SIMPLE set
+      { letters: "EILMPS", display: "S I M P L E", words: ["SIMPLE", "SMILE", "SLIME", "PILES", "MILES", "LIME", "LIMP", "PIES", "PILE", "SLIM", "SLIP", "MISE", "LIPS", "MEL", "IMP", "LIE", "LIP", "PIE", "SIP", "ELM", "LEI", "MIL", "SIM", "PES", "SEI", "SEL"] },
+      
+      // Additional sets for unlimited levels
+      { letters: "AEORTW", display: "O R A T E W", words: ["WATER", "TOWER", "WROTE", "ORATE", "RATE", "TEAR", "WEAR", "ROTE", "TORE", "WART", "WORE", "ARE", "ART", "ATE", "EAR", "ERA", "OAR", "ORE", "OWE", "RAT", "RAW", "ROW", "TAR", "TOW", "TWO", "WAR", "WET", "WOE", "WOT"] },
+      
+      { letters: "AEINST", display: "S A I N T E", words: ["SAINT", "STAIN", "SITNE", "ANISE", "TINES", "INSET", "NEAT", "NEST", "SANE", "SATE", "SEAT", "SENT", "SINE", "SITE", "ANTE", "ANTI", "TINS", "TIES", "AIS", "ANE", "ANI", "ANT", "ATE", "EAT", "INS", "ITS", "NET", "NIT", "SAT", "SEA", "SET", "SIN", "SIT", "TAN", "TAS", "TEN", "TIE", "TIN"] },
+      
+      { letters: "ACELMP", display: "C A M P L E", words: ["CAMPLE", "CLAMP", "CAMEL", "PLACE", "PALM", "CLAP", "LAMP", "PALE", "PAL", "ACE", "ALE", "APE", "CAM", "CAP", "CEL", "ELM", "LAC", "LAM", "LAP", "LEA", "MAC", "MAP", "MEL", "PAC", "PAL", "PEC", "AMP"] },
+      
+      { letters: "DEORST", display: "S T O R E D", words: ["STORED", "REST", "RODE", "ROSE", "SORE", "SORT", "DOER", "DOES", "DOSE", "REDS", "RODS", "ROTS", "DOT", "ORE", "RED", "ROD", "SOD", "TOE", "DOE", "DOR", "DOS", "ERS", "EST", "ODE", "ODS", "ORS", "ORT", "OSE", "RED", "RES", "RET", "ROD", "ROE", "SER", "SET", "SOD", "SOT", "TED", "TES"] }
+    ];
+    
+    // ============ AUDIO ENGINE ============
+    let audioCtx = null;
+    let musicPlaying = true;
+    let musicInterval = null;
+    let currentNoteIndex = 0;
+    const melodyNotes = [262, 294, 330, 349, 392, 349, 330, 294];
     
     function initAudio() {
       if (audioCtx) return;
       try {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        musicGain = audioCtx.createGain();
-        musicGain.gain.value = 0.12;
-        musicGain.connect(audioCtx.destination);
       } catch (e) {
-        console.log("Audio not supported");
         musicPlaying = false;
       }
     }
     
-    function playTone(freq, duration, type = 'sine', vol = 0.15) {
+    function playTone(freq, duration, type = 'sine', vol = 0.12) {
       if (!audioCtx) return;
       const now = audioCtx.currentTime;
       const osc = audioCtx.createOscillator();
@@ -286,55 +334,34 @@
     }
     
     function playSelectSound() {
-      playTone(520, 0.1, 'sine', 0.1);
+      playTone(520, 0.08, 'sine', 0.08);
     }
     
     function playSuccessSound() {
-      if (!audioCtx) return;
-      playTone(660, 0.15, 'triangle', 0.2);
-      setTimeout(() => playTone(880, 0.2, 'triangle', 0.2), 150);
+      playTone(660, 0.12, 'triangle', 0.15);
+      setTimeout(() => playTone(880, 0.15, 'triangle', 0.18), 120);
     }
     
     function startMusic() {
       if (!audioCtx || !musicPlaying) return;
       stopMusic();
-      currentMusicNoteIndex = 0;
-      function playNextNote() {
-        if (!musicPlaying || !audioCtx) {
-          stopMusic();
-          return;
-        }
-        const note = melodyNotes[currentMusicNoteIndex % melodyNotes.length];
-        playTone(note, 0.3, 'sine', 0.08);
-        currentMusicNoteIndex++;
+      function playNext() {
+        if (!musicPlaying) { stopMusic(); return; }
+        playTone(melodyNotes[currentNoteIndex % melodyNotes.length], 0.25, 'sine', 0.06);
+        currentNoteIndex++;
       }
-      playNextNote();
-      musicInterval = setInterval(playNextNote, noteDuration);
+      playNext();
+      musicInterval = setInterval(playNext, 400);
     }
     
     function stopMusic() {
-      if (musicInterval) {
-        clearInterval(musicInterval);
-        musicInterval = null;
-      }
+      if (musicInterval) { clearInterval(musicInterval); musicInterval = null; }
     }
     
     function toggleMusic() {
-      if (!audioCtx) {
-        initAudio();
-        if (audioCtx) {
-          musicPlaying = true;
-          startMusic();
-          updateMusicButtons();
-          return;
-        }
-      }
+      if (!audioCtx) { initAudio(); if (audioCtx) { musicPlaying = true; startMusic(); updateMusicButtons(); return; } }
       musicPlaying = !musicPlaying;
-      if (musicPlaying) {
-        startMusic();
-      } else {
-        stopMusic();
-      }
+      musicPlaying ? startMusic() : stopMusic();
       updateMusicButtons();
     }
     
@@ -344,17 +371,17 @@
       document.getElementById('musicToggleGame').textContent = status;
     }
     
-    // ----- GAME LOGIC -----
-    const TARGET_WORD = "LEGEND";
-    const BASE_LETTERS = ['L', 'E', 'G', 'E', 'N', 'D'];
-    
-    let currentLevel = 1;
-    let circleLetters = [...BASE_LETTERS];
+    // ============ GAME STATE ============
+    let currentLevel = 0; // 0-indexed into wordSets
+    let currentWordSet = wordSets[0];
+    let circleLetters = [];
     let letterPositions = [];
     let selectedIndices = [];
     let currentWord = '';
     let isDrawing = false;
     let canvasRect = null;
+    let foundWords = new Set();
+    let totalPossibleWords = 0;
     
     const canvas = document.getElementById('letterCanvas');
     const ctx = canvas.getContext('2d');
@@ -364,60 +391,49 @@
     const messageBox = document.getElementById('messageBox');
     const levelBadge = document.getElementById('levelBadge');
     const levelDisplayMenu = document.getElementById('levelDisplayMenu');
+    const foundWordsArea = document.getElementById('foundWordsArea');
+    const letterDisplay = document.getElementById('letterDisplay');
+    const wordPreviewMenu = document.getElementById('wordPreviewMenu');
     
-    // Pages
     const menuPage = document.getElementById('menuPage');
     const gamePage = document.getElementById('gamePage');
     
     function updateLevelDisplay() {
-      levelBadge.textContent = `Level ${currentLevel}`;
-      levelDisplayMenu.textContent = `Level ${currentLevel}`;
+      const levelNum = currentLevel + 1;
+      levelBadge.textContent = `Level ${levelNum}`;
+      levelDisplayMenu.textContent = `Level ${levelNum}`;
+      letterDisplay.textContent = currentWordSet.display;
+      wordPreviewMenu.textContent = `Letters: ${currentWordSet.display}`;
     }
     
-    // Generate harder letters for higher levels (unlimited progression)
-    function generateLevelLetters(level) {
-      // Start with base letters, then add variations/shuffles that make it harder
-      let letters = [...BASE_LETTERS];
-      
-      // For levels > 1, we introduce controlled difficulty:
-      // - shuffle more aggressively
-      // - sometimes duplicate letters to confuse (but keep target solvable)
-      if (level >= 3) {
-        // Add extra decoy letters? No, we keep exactly 6 letters for LEGEND.
-        // Instead, we ensure the arrangement is tricky.
-        // Use Fisher-Yates with seed based on level for consistency?
-        // We'll just shuffle randomly; unlimited levels just reshuffle.
+    function loadLevel(levelIndex) {
+      currentLevel = levelIndex % wordSets.length;
+      currentWordSet = wordSets[currentLevel];
+      // Convert sorted letters to array (preserve display order for circle)
+      circleLetters = currentWordSet.display.split(' ').filter(l => l.trim());
+      // Ensure we have letters for circle
+      if (circleLetters.length === 0) {
+        circleLetters = currentWordSet.letters.split('');
       }
-      
-      // Shuffle letters based on level seed for variation
-      const shuffled = [...letters];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      return shuffled;
-    }
-    
-    function loadLevel(level) {
-      currentLevel = level;
-      circleLetters = generateLevelLetters(level);
+      foundWords = new Set();
+      totalPossibleWords = currentWordSet.words.length;
       clearSelection();
       computeLetterPositions();
       drawCircle();
       updateLevelDisplay();
-      messageBox.textContent = 'drag finger across letters';
+      updateFoundWordsDisplay();
+      messageBox.textContent = `Find all ${totalPossibleWords} words!`;
     }
     
     function nextLevel() {
-      currentLevel++;
-      loadLevel(currentLevel);
+      loadLevel(currentLevel + 1);
       if (musicPlaying) playSelectSound();
     }
     
     function computeLetterPositions() {
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
-      const radius = Math.min(canvas.width, canvas.height) * 0.38;
+      const radius = Math.min(canvas.width, canvas.height) * 0.36;
       const count = circleLetters.length;
       letterPositions = [];
       const startAngle = -Math.PI / 2;
@@ -435,67 +451,82 @@
       
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
+      const radius = Math.min(canvas.width, canvas.height) * 0.42;
       
-      // faint ring
+      // Dimmer outer ring
       ctx.beginPath();
-      ctx.arc(centerX, centerY, Math.min(canvas.width, canvas.height) * 0.42, 0, 2*Math.PI);
-      ctx.strokeStyle = '#dacdb8';
-      ctx.lineWidth = 2;
-      ctx.setLineDash([8, 8]);
+      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      ctx.strokeStyle = 'rgba(180, 160, 130, 0.3)';
+      ctx.lineWidth = 1.8;
+      ctx.setLineDash([6, 8]);
       ctx.stroke();
       ctx.setLineDash([]);
       
-      // connection lines
+      // Subtle inner circle
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius * 0.88, 0, 2 * Math.PI);
+      ctx.strokeStyle = 'rgba(190, 170, 140, 0.2)';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+      
+      // Connection lines
       if (selectedIndices.length > 1) {
         ctx.beginPath();
-        ctx.strokeStyle = '#b3925c';
-        ctx.lineWidth = 3.8;
+        ctx.strokeStyle = 'rgba(179, 146, 92, 0.7)';
+        ctx.lineWidth = 3.5;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
-        ctx.shadowColor = '#c9ad7a';
-        ctx.shadowBlur = 8;
+        ctx.shadowColor = 'rgba(179, 146, 92, 0.4)';
+        ctx.shadowBlur = 10;
         const firstPos = letterPositions[selectedIndices[0]];
         ctx.moveTo(firstPos.x, firstPos.y);
         for (let i = 1; i < selectedIndices.length; i++) {
-          const pos = letterPositions[selectedIndices[i]];
-          ctx.lineTo(pos.x, pos.y);
+          ctx.lineTo(letterPositions[selectedIndices[i]].x, letterPositions[selectedIndices[i]].y);
         }
         ctx.stroke();
         ctx.shadowColor = 'transparent';
         ctx.shadowBlur = 0;
       }
       
-      // letter nodes
+      // Letter nodes - INCREASED SIZE
       letterPositions.forEach((pos, idx) => {
         const isSelected = selectedIndices.includes(idx);
+        const isUsedInFoundWord = false; // could track but keeping simple
+        
+        // Larger highlight for selected
         if (isSelected) {
           ctx.beginPath();
-          ctx.arc(pos.x, pos.y, 28, 0, 2*Math.PI);
-          ctx.fillStyle = '#f3e7d3';
-          ctx.shadowBlur = 14;
-          ctx.shadowColor = '#c9af7c';
+          ctx.arc(pos.x, pos.y, 32, 0, 2 * Math.PI);
+          ctx.fillStyle = 'rgba(243, 231, 211, 0.7)';
+          ctx.shadowBlur = 16;
+          ctx.shadowColor = 'rgba(190, 160, 110, 0.5)';
           ctx.fill();
           ctx.shadowColor = 'transparent';
           ctx.shadowBlur = 0;
         }
+        
+        // Letter circle - larger: radius 30 (was 25)
         ctx.beginPath();
-        ctx.arc(pos.x, pos.y, 25, 0, 2*Math.PI);
-        ctx.fillStyle = isSelected ? '#f7efdf' : '#fffef9';
+        ctx.arc(pos.x, pos.y, 30, 0, 2 * Math.PI);
+        ctx.fillStyle = isSelected ? '#f7efdf' : '#fefcf8';
         ctx.fill();
-        ctx.strokeStyle = isSelected ? '#b3925c' : '#cfc0a6';
-        ctx.lineWidth = 2.2;
+        ctx.strokeStyle = isSelected ? '#b3925c' : 'rgba(200, 180, 150, 0.6)';
+        ctx.lineWidth = 2;
         ctx.stroke();
-        ctx.font = 'bold 22px "Times New Roman", "Georgia", serif';
+        
+        // Letter text - LARGER FONT
+        ctx.font = 'bold 26px "Times New Roman", "Georgia", serif';
         ctx.fillStyle = '#3e3629';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(pos.letter, pos.x, pos.y);
       });
       
+      // Current word in center
       if (currentWord.length > 0) {
-        ctx.font = 'italic 18px "Georgia", serif';
+        ctx.font = 'italic 16px "Georgia", serif';
         ctx.fillStyle = '#5c4b31';
-        ctx.fillText(currentWord, centerX, centerY + 4);
+        ctx.fillText(currentWord, centerX, centerY + 5);
       }
     }
     
@@ -503,19 +534,42 @@
       currentWord = selectedIndices.map(i => circleLetters[i]).join('');
       formedWordDisplay.textContent = currentWord || '·······';
       
-      if (currentWord === TARGET_WORD) {
-        messageBox.textContent = '🌟 LEGEND! Level complete! 🌟';
-        formedWordDisplay.style.color = '#b3925c';
-        if (musicPlaying) playSuccessSound();
-      } else if (currentWord.length === TARGET_WORD.length && currentWord !== TARGET_WORD) {
-        messageBox.textContent = 'Not LEGEND. Try different path.';
-        formedWordDisplay.style.color = '#4b3c28';
-      } else if (currentWord.length > 0) {
-        messageBox.textContent = 'keep dragging...';
-        formedWordDisplay.style.color = '#4b3c28';
+      if (currentWord.length >= 2) {
+        const upperWord = currentWord.toUpperCase();
+        if (currentWordSet.words.includes(upperWord) && !foundWords.has(upperWord)) {
+          // New word found!
+          foundWords.add(upperWord);
+          updateFoundWordsDisplay();
+          messageBox.textContent = `✨ Found: ${upperWord}!`;
+          formedWordDisplay.style.color = '#b3925c';
+          if (musicPlaying) playSuccessSound();
+          
+          // Check if all words found
+          if (foundWords.size >= totalPossibleWords) {
+            messageBox.textContent = '🏆 ALL WORDS FOUND! Level Complete!';
+          }
+        } else if (foundWords.has(upperWord)) {
+          messageBox.textContent = `"${upperWord}" already found`;
+          formedWordDisplay.style.color = '#4b3c28';
+        } else if (currentWord.length >= 2) {
+          messageBox.textContent = 'keep exploring...';
+          formedWordDisplay.style.color = '#4b3c28';
+        }
       } else {
         messageBox.textContent = 'drag finger across letters';
         formedWordDisplay.style.color = '#4b3c28';
+      }
+    }
+    
+    function updateFoundWordsDisplay() {
+      if (foundWords.size === 0) {
+        foundWordsArea.innerHTML = '<span style="opacity:0.7;">found words appear here</span>';
+      } else {
+        const wordsArray = Array.from(foundWords).sort((a,b) => b.length - a.length || a.localeCompare(b));
+        foundWordsArea.innerHTML = wordsArray.map(w => 
+          `<span style="background:#e7d9c2; padding:0.1rem 0.5rem; border-radius:1rem; margin:0.1rem; display:inline-block;">${w}</span>`
+        ).join(' ');
+        foundWordsArea.innerHTML += ` <span style="opacity:0.6;">(${foundWords.size}/${totalPossibleWords})</span>`;
       }
     }
     
@@ -546,7 +600,7 @@
       const canvasY = (clientY - canvasRect.top) * scaleY;
       for (let i = 0; i < letterPositions.length; i++) {
         const dist = Math.hypot(canvasX - letterPositions[i].x, canvasY - letterPositions[i].y);
-        if (dist <= 30) return i;
+        if (dist <= 35) return i; // increased hit area for larger letters
       }
       return -1;
     }
@@ -599,9 +653,6 @@
       e.preventDefault();
       isDrawing = false;
       drawCircle();
-      if (currentWord === TARGET_WORD) {
-        messageBox.textContent = '🎉 LEGEND! Tap Next Level!';
-      }
     }
     
     function bindEvents() {
@@ -618,7 +669,6 @@
       });
     }
     
-    // Page navigation
     function showPage(pageId) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
@@ -628,30 +678,20 @@
       }
     }
     
-    // Initialize everything
     function init() {
       initAudio();
       if (musicPlaying) startMusic();
       updateMusicButtons();
-      computeLetterPositions();
-      drawCircle();
       bindEvents();
-      updateLevelDisplay();
+      loadLevel(0);
       
-      // Menu buttons
       document.getElementById('playBtn').addEventListener('click', () => {
         showPage('gamePage');
         loadLevel(currentLevel);
       });
-      document.getElementById('nextLevelBtnMenu').addEventListener('click', () => {
-        nextLevel();
-      });
+      document.getElementById('nextLevelBtnMenu').addEventListener('click', nextLevel);
       document.getElementById('musicToggleMenu').addEventListener('click', toggleMusic);
-      
-      // Game buttons
-      document.getElementById('backToMenuBtn').addEventListener('click', () => {
-        showPage('menuPage');
-      });
+      document.getElementById('backToMenuBtn').addEventListener('click', () => showPage('menuPage'));
       document.getElementById('shuffleBtn').addEventListener('click', shuffleLetters);
       document.getElementById('clearBtn').addEventListener('click', () => {
         clearSelection();
@@ -660,7 +700,7 @@
       document.getElementById('musicToggleGame').addEventListener('click', toggleMusic);
       document.getElementById('nextLevelBtnGame').addEventListener('click', () => {
         nextLevel();
-        messageBox.textContent = `Level ${currentLevel} · drag finger`;
+        messageBox.textContent = `Level ${currentLevel+1} · Find all words!`;
       });
       document.getElementById('downloadBtn').addEventListener('click', () => {
         const doctype = '<!DOCTYPE html>\n';
@@ -669,7 +709,7 @@
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'WORD_circle_unlimited.html';
+        a.download = 'WORD_CIRCLE_dictionary.html';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
